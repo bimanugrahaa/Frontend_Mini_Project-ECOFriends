@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.font-signika {
+    font-family: Signika;
+}
+
+.login{
+    margin-top: 270px;
+}
+
+.jumbotron{
+    /* background-image:linear-gradient(rgba(255, 255, 255, 0.65), rgba(177, 177, 177, 0.062)), url(../assets/Login-background.png); */
+    background-image:linear-gradient(rgba(184, 184, 184, 0.65), rgba(151, 151, 151, 0.062)), url(../assets/Login-background.png);
+    width: 100%;
+    height: 1007px;
+    /* filter: blur(2px); */
+    /* margin-top: 80px; */   
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.signin-text{
+    font-variant: small-caps;
+    font-weight: 400;
+    margin-bottom: 24px;
+}
+
+.signin-btn{
+    background-color: #528A62;
+    color: white;
+    width: 150px;
+    font-size: 18px;
+    border-radius: 10px;
+    filter: drop-shadow(0px 100px 80px rgba(0, 0, 0, 0.07)) drop-shadow(0px 41.7776px 33.4221px rgba(0, 0, 0, 0.0503198)) drop-shadow(0px 22.3363px 17.869px rgba(0, 0, 0, 0.0417275)) drop-shadow(0px 12.5216px 10.0172px rgba(0, 0, 0, 0.035)) drop-shadow(0px 6.6501px 5.32008px rgba(0, 0, 0, 0.0282725)) drop-shadow(0px 2.76726px 2.21381px rgba(0, 0, 0, 0.0196802));
+}
+
+.navbar-signin{
+    width: 100%;
+}

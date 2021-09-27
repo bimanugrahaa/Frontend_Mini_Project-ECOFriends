@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.font-signika {
+    font-family: Signika;
+}
+
+.text{
+    text-align: left;
+    /* margin-left: 215px; */
+    margin-top: 250px;
+    font-variant: small-caps;
+}
+
+.text-1{
+    font-size: 48px;
+    font-weight: 700;
+    text-transform: capitalize;
+}
+
+.text-2{
+    font-size: 96px;
+    font-weight: 700;
+    color: #54775E;
+}
+
+.text-3{
+    font-size: 24px;
+    font-weight: 400;
+}
+
+.image {
+    margin-top: 120px
+}
+
+.btn-happening {
+    background-color: #54775E;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+}

@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.font-signika {
+    font-family: Signika;
+}
+
+.font-roboto {
+    font-family: Roboto;
+    font-weight: 500;
+}
+
+.logo {
+    font-size: 48px;
+    color: #54775E;
+}
+
+.nav-item {
+    color: black;
+}
+
+.sign-in{
+    background-color: #54775E;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+.about-us{
+    background-color: white;
+    font-size: 18px;
+    border-radius: 10px;
+}
