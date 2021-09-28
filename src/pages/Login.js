@@ -5,7 +5,7 @@ import './Login.css'
 export default function Login() {
     
     return (
-        <div className="jumbotron">
+        <div className="jumbotron background-image login-page">
             <HeaderLogo/>
             <form className="container col-md-2 col-sm-8 login font-signika mx-auto">
                 <h1 className="signin-text">Sign In</h1>

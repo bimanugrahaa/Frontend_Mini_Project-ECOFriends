@@ -1,9 +1,12 @@
 import image from "../assets/Home-image.jpg"
+import Header from "../components/Header"
 import './Home.css'
 
 export default function Home() {
     
     return(
+        <>
+        <Header/>
         <div className="container-fluid mt-5">
             <div className="row">
                 <div className="col-md-2"></div>
@@ -20,5 +23,6 @@ export default function Home() {
                 </div>
             </div>
         </div>
+        </>
     )
 }

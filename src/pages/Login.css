@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Signika&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
+.login-page {
+    text-align: center;
+}
+
 .font-signika {
     font-family: Signika;
 }
@@ -9,7 +13,7 @@
     margin-top: 270px;
 }
 
-.jumbotron{
+.background-image{
     /* background-image:linear-gradient(rgba(255, 255, 255, 0.65), rgba(177, 177, 177, 0.062)), url(../assets/Login-background.png); */
     background-image:linear-gradient(rgba(184, 184, 184, 0.65), rgba(151, 151, 151, 0.062)), url(../assets/Login-background.png);
     width: 100%;

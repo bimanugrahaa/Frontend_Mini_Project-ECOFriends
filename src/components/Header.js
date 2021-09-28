@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png"
 import './Header.css'
 
@@ -17,7 +18,7 @@ export default function Header() {
             {/* <ul id="items" className="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0"> */}
                 {/* <li><a href="/about-us" class="nav-link nav-item link-dark font-roboto">About us</a></li> */}
                 <button href="/about-us" className="me-4 about-us font-roboto btn">About us</button>
-                <button type="button" className="me-5 font-roboto sign-in btn">Sign In</button>
+                <NavLink to="/login" type="button" className="me-5 font-roboto sign-in btn">Sign In</NavLink>
                 {/* <li><a href="/sign-in" class="nav-link nav-item me-5 font-roboto sign-in">Sign In</a></li> */}
             </ul>
         </header>
