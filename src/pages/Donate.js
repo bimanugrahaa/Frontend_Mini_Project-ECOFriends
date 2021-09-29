@@ -1,8 +1,13 @@
+import { useHistory } from "react-router-dom";
 import HeaderLogo from '../components/HeaderLogo'
 import './Donate.css'
 
 export default function Donate() {
-    
+    const history = useHistory();
+    const goHome = () => {
+        history.goBack()
+    }
+
     return (
         <div className="jumbotron donate-background ">
             
@@ -15,7 +20,7 @@ export default function Donate() {
                 <div className="col-md-7 mx-0 my-0 card-donate card">
                     <div className="row">
                         <div className="col-md-1 my-auto">
-                            <i className="fa fa-chevron-left fa-2x" aria-hidden="true"></i>
+                            <i onClick={goHome} className="fa fa-chevron-left fa-2x" aria-hidden="true"></i>
                         </div>
                         <div className="col-md-11 mx-auto">
                             <HeaderLogo/>

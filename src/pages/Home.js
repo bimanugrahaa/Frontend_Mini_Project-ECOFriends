@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom"
 import image from "../assets/Home-image.jpg"
 import Header from "../components/Header"
 import './Home.css'
@@ -15,7 +16,7 @@ export default function Home() {
                     <h1 className="text-2">BIG</h1>
                     <h1 className="text-2">CHANGES</h1>
                     <h5 className="text-3">With ECOFriends, we take care the nature for the world</h5>
-                    <button className="mt-4 btn btn-happening shadow-lg">What's happening?</button>
+                    <NavLink to="/fundraising" type="button" className="mt-4 btn btn-happening shadow-lg">What's happening?</NavLink>
                 </div>
 
                 <div className="col-md-5 image">

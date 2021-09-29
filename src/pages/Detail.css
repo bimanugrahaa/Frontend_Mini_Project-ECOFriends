@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Signika&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.font-signika {
+    font-family: Signika;
+}
+
+.font-roboto {
+    font-family: Roboto;
+    font-weight: 500;
+}
+
+.detail-title{
+    margin-top: 31px;
+    text-align: center;
+    font-weight: 400;
+    font-size: 40px;
+}
+
+.detail-subtitle{
+    font-weight: 600;
+    font-size: 24px;
+    margin-top: 18px;
+    margin-left: 20px;
+}
+
+.detail-description{
+    font-size: 18px;
+    margin-left: 20px;
+}
+
+.detail-row-1{
+    margin-top: 58px;
+}
+
+.detail-post{
+    margin-left: 220px;
+    width: 600px;
+    /* height: 325px; */
+}
+.detail-img {
+    border-radius: 10px;
+    width: 580px;
+    height: 325px;
+}
+
+.detail-info{
+    margin-left: 128px;
+}
+
+.btn-donate-now{
+    background-color: #54775E;
+    color: white;
+    width: 200px;
+}

@@ -6,6 +6,8 @@ import Home from './pages/Home';
 import HeaderLogo from './components/HeaderLogo';
 import Login from './pages/Login';
 import Donate from './pages/Donate';
+import Fundraising from './pages/Fundraising';
+import Detail from './pages/Detail';
 
 function App() {
   // return (
@@ -23,6 +25,8 @@ function App() {
         {/* <Route path="/about-us" exact component={AboutUs}/> */}
         <Route path="/donate" exact component={Donate}/>
         <Route path="/login" exact component={Login}/>
+        <Route path="/fundraising" exact component={Fundraising}/>
+        <Route path="/detail/:id" exact component={Detail}/>
         {/* <Route component={NotFound}/> */}
       </Switch>
     </BrowserRouter>
