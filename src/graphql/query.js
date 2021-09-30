@@ -60,4 +60,15 @@ query MyQuery {
   }  
 `
 
-export { GetDonatePost, GetDonatePostById, GetCommentPost, GetUserComment, GetAllUser }
+const GetUserById = gql`
+query MyQuery($ID_USER: Int!) {
+  user(where: {ID_USER: {_eq: $ID_USER}}) {
+    ID_USER
+    name
+    username
+    pass
+  }
+}
+`
+
+export { GetDonatePost, GetDonatePostById, GetCommentPost, GetUserComment, GetAllUser, GetUserById }

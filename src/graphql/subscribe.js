@@ -14,19 +14,44 @@ subscription MySubscription {
   }
 `
 
-const SubscriptionComments = gql`
+const SubscriptionInfo = gql`
 subscription MySubscription($ID_POST: Int!) {
   donate_post(where: {ID_POST: {_eq: $ID_POST}}) {
     ID_POST
     Donation_Raised
     Donation_Total
-    comments(where: {ID_POST: {_eq: $ID_POST}}) {
-      ID_COMMENT
+  }
+}
+`
+
+// const SubscriptionComments = gql`
+// subscription MySubscription($ID_POST: Int!) {
+//   comments(where: {ID_POST: {_eq: $ID_POST}}) {
+//     ID_COMMENT
+//     ID_USER
+//     Comment_post
+//     user {
+//       ID_USER
+//       name
+//       username
+//     }
+//   }
+// }
+// `
+
+const SubscriptionComments = gql`
+subscription MySubscription($ID_POST: Int!, $ID_COMMENT: order_by = asc) {
+  comments(where: {ID_POST: {_eq: $ID_POST}}, order_by: {ID_COMMENT: $ID_COMMENT}) {
+    ID_COMMENT
+    ID_USER
+    Comment_post
+    user {
       ID_USER
-      Comment_post
+      name
+      username
     }
   }
 }
 `
 
-export { SubscriptionDonatePost, SubscriptionComments }
+export { SubscriptionDonatePost, SubscriptionInfo, SubscriptionComments }

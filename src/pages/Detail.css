@@ -74,6 +74,11 @@
     height: 200px;
 }
 
+.form-comment-edit{
+    width: 500px;
+    height: 50px;
+}
+
 .btn-post-comment{
     width: 140px;
     /* float: right; */
@@ -89,4 +94,12 @@
     margin: 10px 0px 0px 0px;
     padding-bottom: 10px;
 }
+
+.empty-comment{
+    border-bottom: 1px solid gray;
+    margin: 10px 0px 0px 0px;
+    padding-right: 50px;
+    /* width: 20px; */
+}
+
 
