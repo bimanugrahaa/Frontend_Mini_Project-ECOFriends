@@ -31,7 +31,7 @@ export default function Fundraising() {
         <>
         <HeaderLogo/>
 
-        <h1>What's happening?</h1>
+        <h1 className="text-center font-signika">What's happening?</h1>
         <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mx-5 my-5">
             {data?.donate_post.map((result) => (
                 

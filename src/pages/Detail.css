@@ -34,7 +34,7 @@
 }
 
 .detail-post{
-    margin-left: 220px;
+    /* margin-left: 220px; */
     width: 600px;
     /* height: 325px; */
 }
@@ -53,3 +53,40 @@
     color: white;
     width: 200px;
 }
+
+.donation-raised{
+    color: #54775E;
+    font-size: 20px;
+}
+
+.text-raised{
+    margin-top: 48px;
+}
+
+.text-support{
+    font-size: 24px;
+    /* margin-left: 250px; */
+}
+
+.form-comment{
+    /* margin-left: 250px; */
+    width: 500px;
+    height: 200px;
+}
+
+.btn-post-comment{
+    width: 140px;
+    /* float: right; */
+    /* position:inherit; */
+    height: 40px;
+    /* margin-left: 250px; */
+    background-color: #AA8976;
+    color: white;
+}
+
+.card-comment {
+    border-bottom: 1px solid gray;
+    margin: 10px 0px 0px 0px;
+    padding-bottom: 10px;
+}
+
