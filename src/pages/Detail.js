@@ -15,8 +15,17 @@ import { auth } from "../firebase";
 
 export default function Detail(props) {
 
+    const [ID_USER, getActiveUser] = useState("")
     auth.onAuthStateChanged((user) => {
         console.log("user detail", user)
+
+        if (user === null) {
+            getActiveUser('0')
+        } else {
+            getActiveUser(user.uid);
+        }
+        
+
         // console.log("getUser", getUser)
         // if (user) {
         //     setUser(true)
@@ -32,7 +41,7 @@ export default function Detail(props) {
 
     console.log("props", props)
     const ID = props.location.state.ID_POST
-    const ID_USER = 2;
+    // const ID_USER = 2;
     console.log("ID_POST", ID)
 
     const [detail, getDetail] = useState([])
@@ -54,6 +63,8 @@ export default function Detail(props) {
     // const {userDataById, userErrorById } = useGetUserById(ID_USER)
     // const {userData, userError} = useGetAllUser();
     // console.log("commentsData", commentsData.donate_post)
+
+    console.log('commentsData out', commentsData)
     const history = useHistory();
     const action = (ID) => {
         // getPostId(data?.donate_post.ID_POST)

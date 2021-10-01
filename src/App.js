@@ -8,6 +8,7 @@ import Login from './pages/Login';
 import Donate from './pages/Donate';
 import Fundraising from './pages/Fundraising';
 import Detail from './pages/Detail';
+import Signup from './pages/Signup';
 
 function App() {
   // return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" exact component={Login}/>
         <Route path="/fundraising" exact component={Fundraising}/>
         <Route path="/detail/:id" exact component={Detail}/>
+        <Route path="/signup" exact component={Signup}/>
         {/* <Route component={NotFound}/> */}
       </Switch>
     </BrowserRouter>

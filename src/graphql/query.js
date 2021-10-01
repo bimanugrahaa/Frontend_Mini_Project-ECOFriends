@@ -44,21 +44,23 @@ query MyQuery($ID_USER: Int!) {
     user(where: {ID_USER: {_eq: $ID_USER}}) {
       ID_USER
       name
-      username
+      email
     }
   }
 `
+// username => email
 
 const GetAllUser = gql`
 query MyQuery {
     user {
       ID_USER
       name
-      username
-      pass
+      email
     }
   }  
 `
+// username
+// pass
 
 const GetUserById = gql`
 query MyQuery($ID_USER: Int!) {

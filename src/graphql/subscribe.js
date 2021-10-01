@@ -48,7 +48,7 @@ subscription MySubscription($ID_POST: Int!, $ID_COMMENT: order_by = asc) {
     user {
       ID_USER
       name
-      username
+      email
     }
   }
 }
