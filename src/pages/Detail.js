@@ -11,11 +11,21 @@ import useDeleteComment from "../hooks/useDeleteComment";
 import useSubscribeInfo from "../hooks/useSubscribeInfo";
 import './Detail.css'
 import useUpdateComment from "../hooks/useUpdateComment";
+import { auth } from "../firebase"; 
 
 export default function Detail(props) {
 
-
-
+    auth.onAuthStateChanged((user) => {
+        console.log("user detail", user)
+        // console.log("getUser", getUser)
+        // if (user) {
+        //     setUser(true)
+        // } else {
+        //     setUser(false)
+        // }
+        // setUser({ user: user });
+      })
+    // console.log(auth)
     const urlNow = props.location.pathname
     const uriSplit = urlNow.split('/')
     console.log(uriSplit[2])

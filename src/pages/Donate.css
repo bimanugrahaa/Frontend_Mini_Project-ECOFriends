@@ -35,11 +35,16 @@
 }
 
 .btn-nominal{
-    background-color: #64BE7E;
+    background-color: white;
+    outline: 1px solid #64BE7E;;
     width: 326px;
     height: 50px;
     font-weight: 400;
     font-size: 24px;
+}
+
+.btn-nominal:hover{
+    background-color: #64BE7E;
 }
 
 .btn-donate{
