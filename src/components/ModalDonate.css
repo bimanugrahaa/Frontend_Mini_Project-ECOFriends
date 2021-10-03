@@ -1,4 +1,7 @@
 .modal-content-loading{
     background: transparent;
-    outline-color: white;
+}
+
+.success-bg{
+    background: #12C06A;;
 }
