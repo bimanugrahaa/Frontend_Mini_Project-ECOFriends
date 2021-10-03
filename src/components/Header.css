@@ -38,3 +38,9 @@
     font-size: 18px;
     border-radius: 10px;
 }
+
+/* Header sign out */
+.sign-out{
+    background: transparent;
+    color: black;
+}

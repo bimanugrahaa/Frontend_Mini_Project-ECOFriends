@@ -4,6 +4,7 @@ import './Login.css'
 import { auth } from '../firebase'
 import { useEffect, useState } from 'react';
 import { Redirect, useHistory } from 'react-router';
+import { Link } from 'react-router-dom';
 // import { signIn, register, signOutUser } from '../auth/authUser';
 import Home from './Home';
 
@@ -13,6 +14,7 @@ export default function Login() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
     const [username, setUsername] = useState('Guest');
     const [loggedIn, setLoggedIn] = useState(false);
@@ -24,39 +26,26 @@ export default function Login() {
             console.log("getUser", getUser)
             if (user) {
                 setUser(true)
+                history.push({
+                    pathname: `/`
+                })
             } else {
                 setUser(false)
             }
-            // if (!user) {
-            //     console.log("getUser", !getUser)
-            // } else {
-            //     console.log("redirect", !getUser);
-            //     history.push(
-            //         {
-            //             pathname: `/`})
-            // }
           });
     },[])
 
-    // if (!getUser) {
-    //     console.log("getUser", !getUser)
-    // } else {
-    //     console.log("redirect", !getUser);
-    //     history.push(
-    //         {
-    //             pathname: `/`})
-    // }
-
-
-    const signIn = (event) => {
+    const signIn = async(event) => {
         event.preventDefault();
     
-        auth
+        setLoading(true)
+        await auth
           .signInWithEmailAndPassword(email, password)
           .then((auth) => {
             setMessage('You have successfully logged in!');
             setLoggedIn(true);
             setUsername(auth.user.email);
+            setLoading(false)
             // console.log(auth.user)
             // resetForm();
           })
@@ -86,15 +75,19 @@ export default function Login() {
           })
           .catch((error) => alert(error.message));
       };
+      
+    if (loading) {
+        return <h1>Loading</h1>
+    }
 
     return (
         <div className="jumbotron background-image login-page">
             <HeaderLogo/>
-            <form className="container col-md-2 col-sm-8 login font-signika mx-auto">
+            <form className="container col-md-2 col-sm-8 login font-signika mx-auto card card-signup border-0 shadow">
                 <h1 className="signin-text">Sign In</h1>
                     <div className="row g-3">
                         <div className="contact-form">
-                            <label htmlFor="validationDefault01" className="form-label my-1">Username</label>
+                            <label htmlFor="validationDefault01" className="form-label my-1">Email</label>
                             <input name='username' type="text" className="form-control" id="validationDefault01" value={email} onChange={(event) => setEmail(event.target.value)} required/>
                             {/* <span className="error-msg">{err.name}</span><br/> */}
                             {/* <div className="is-invalid">Full name cannot be empty</div> */}
@@ -111,7 +104,8 @@ export default function Login() {
                         </div>
                     </div>
             </form>
-            <button className="mt-4 btn signin-btn" type="button" onClick={signOutUser}>SIGN OUT</button>
+            {/* <button className="mt-4 btn signin-btn" type="button" onClick={signOutUser}>SIGN OUT</button> */}
+            <h6 className="mt-4 text-light font-signika">Don't have an account? <Link to='/signup' className="text-success">Sign Up!</Link></h6>
             {console.log("auth", auth.user)}
             
         </div>

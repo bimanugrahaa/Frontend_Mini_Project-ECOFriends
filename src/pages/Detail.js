@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { NavLink, useHistory, Redirect } from "react-router-dom";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Avatar from 'react-avatar';
+import { Modal, Button } from "react-bootstrap";
 import HeaderLogo from "../components/HeaderLogo";
 import { useGetDonatePostById } from "../hooks/useGetDonatePost";
 import useSubscribeComments from "../hooks/useSubscribeComments";
@@ -12,6 +13,7 @@ import useSubscribeInfo from "../hooks/useSubscribeInfo";
 import './Detail.css'
 import useUpdateComment from "../hooks/useUpdateComment";
 import { auth } from "../firebase"; 
+import ModalPrivate from "../components/ModalPrivate";
 
 export default function Detail(props) {
 
@@ -52,6 +54,7 @@ export default function Detail(props) {
         ID_COMMENT: 0,
         Comment_post: ""
     })
+    const [getRedirect, setRedirect] = useState("")
     // const [user, getUser] = useState([])
     const [commentPost, setCommentPost] = useState("")
     const {detailData, detailLoading, detailError} = useGetDonatePostById(ID);
@@ -68,16 +71,61 @@ export default function Detail(props) {
     const history = useHistory();
     const action = (ID) => {
         // getPostId(data?.donate_post.ID_POST)
-        history.push(
-            {
-                pathname: `/donate`,
-                state: {
-                    ID_POST: ID,
-                    Donation_Raised: info?.Donation_Raised
+        console.log("getInAction")
+        if (ID_USER !== '0') {
+            console.log('go to donate')
+            history.push(
+                {
+                    pathname: `/donate`,
+                    state: {
+                        ID_POST: ID,
+                        Donation_Raised: info?.Donation_Raised
+                    }
+                    
                 }
+            )
+        } else {
+            <Modal
+            {...props}
+            // size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            >
+            <Modal.Header closeButton>
+                <Modal.Title id="contained-modal-title-vcenter">
+                    <HeaderLogo/>
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <h4>Centered Modal</h4>
+                <p>
+                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                consectetur ac, vestibulum at eros.
+                </p>
+            </Modal.Body>
+            <Modal.Footer>
+                {/* <Button onClick={() => updateInfoDonateById(ID_POST, Donation_Raised)}>Donate</Button> */}
+                <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+            </Modal>
+            // history.replace(
+            //     {
+            //         pathname: `/login`
+                    
+            //     }
+            // )
+        }
+        // history.push(
+        //     {
+        //         pathname: `/donate`,
+        //         state: {
+        //             ID_POST: ID,
+        //             Donation_Raised: info?.Donation_Raised
+        //         }
                 
-            }
-        )
+        //     }
+        // )
         console.log("ID_POST", ID)
     }
 

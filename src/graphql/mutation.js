@@ -33,7 +33,7 @@ mutation MyMutation($ID_COMMENT: Int!, $Comment_post: String!) {
 `
 
 const UpdateInfoDonate = gql`
-mutation MyMutation($ID_POST: Int!, $Donation_Raised: Int!) {
+mutation MyMutation($ID_POST: Int!, $Donation_Raised: numeric!) {
     update_donate_post_by_pk(pk_columns: {ID_POST: $ID_POST}, _set: {Donation_Raised: $Donation_Raised}) {
       ID_POST
       Donation_Total

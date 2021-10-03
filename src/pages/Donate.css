@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url(https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap);
 
 .font-signika {
     font-family: Signika;
 }
 
-.back-cursor {
+.font-fira-sans {
+    font-family: 'Fira Sans';
+}
+
+.donate-cursor {
     cursor: pointer;
 }
 
@@ -12,16 +17,32 @@
     /* background-image:linear-gradient(rgba(255, 255, 255, 0.65), rgba(177, 177, 177, 0.062)), url(../assets/Login-background.png); */
     background-image:linear-gradient(rgba(184, 184, 184, 0.65), rgba(151, 151, 151, 0.062)), url(../assets/Donate-background.png);
     width: 100%;
-    height: 1000px;
+    height: 1007px;
     /* filter: blur(2px); */
     /* margin-top: 80px; */   
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    /* background: rgba( 255, 255, 255, 0.35 ); */
+    /* box-shadow: 0 8px 32px 0 rgba(1, 90, 13, 0.37);
+    backdrop-filter: blur( 8px );
+    -webkit-backdrop-filter: blur( 8px );
+    border-radius: 10px; */
+}
+
+.donate-blur{
+    /* box-shadow: 0 8px 32px 0 rgba(1, 90, 13, 0.37);
+    backdrop-filter: blur( 8px );
+    -webkit-backdrop-filter: blur( 8px );
+    border-radius: 10px; */
+}
+
+.back-button{
+    width: 20px;
 }
 
 .card-donate{
-    height: 1000px;
+    height: 1007px;
 }
 
 .fa-chevron-left{
@@ -71,7 +92,7 @@
     height: 40px;
     /* background-color: rgba(212, 212, 212, 0); */
     border: 0px;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .input-nominal:focus{
@@ -82,11 +103,11 @@
     font-weight: 600;
     font-size: 56px;
     margin: 0px 150px;
-    font-variant: small-caps;
+    /* font-variant: small-caps; */
     /* color: white; */
-    /* color: white;
-    stroke: #54775E;
-    stroke-width: 100px;
-    -webkit-text-stroke: 1px #54775E; */
+    color: white;
+    /* outline: #54775E;
+    stroke-width: 100px; */
+    /* -webkit-text-stroke: 1px #54775E; */
 
 }
