@@ -62,7 +62,7 @@ export default function ModalDonate(props) {
                 <Button variant="success" onClick={() => updateInfoDonateById(ID_POST, Donation_Raised)}>Donate</Button>
                 <Button variant="dark" onClick={props.onHide}>Close</Button>
             </Modal.Footer>
-            </Modal>
+        </Modal>
             {loadingInfoDonate?
                 <>
                 <Modal show={true} centered contentClassName="modal-content-loading border-0">

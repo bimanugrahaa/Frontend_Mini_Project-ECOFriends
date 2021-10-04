@@ -45,6 +45,8 @@ subscription MySubscription($ID_POST: Int!, $ID_COMMENT: order_by = asc) {
     ID_COMMENT
     ID_USER
     Comment_post
+    Date
+    isEdited
     user {
       ID_USER
       name

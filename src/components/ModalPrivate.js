@@ -1,11 +1,17 @@
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Loader from "react-loader-spinner";
+import { useHistory } from "react-router";
 import HeaderLogo from '../components/HeaderLogo'
 import useUpdateInfoDonate from "../hooks/useUpdateInfoDonate";
 import './ModalDonate.css'
 
 export default function ModalPrivate(props) {
+
+    const history = useHistory();
+    const goBack = () => {
+        history.replace("/")
+    }
 
     const {updateInfoDonate, loadingInfoDonate} = useUpdateInfoDonate();
     console.log(props)
@@ -39,62 +45,23 @@ export default function ModalPrivate(props) {
 
     return (
         <>
-        {/* {loadingInfoDonate?
-            <>
-            <Modal show={true} centered contentClassName="modal-content-loading border-0">
-                <Loader type="Circles" color="#00BFFF" height={80} width={80}/>
-            </Modal>
-            </>
-            : */}
+            {setTimeout(() => {goBack()}, 2500)}
             <Modal
             {...props}
-            // size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
+            contentClassName="border-0"
             >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    <HeaderLogo/>
+            <Modal.Header className="border-0">
+                <Modal.Title id="contained-modal-title-vcenter" >
+                    <h2>Hi, <span className="text-success">Guest!</span>!</h2>
                 </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <h4>Centered Modal</h4>
-                <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                consectetur ac, vestibulum at eros.
-                </p>
+            <Modal.Body className="border-0">
+                <h4> Please login to donate! </h4>
+                <h6>Thank you for visiting <span className="text-success">ECOFriends!</span>.</h6>
             </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={() => updateInfoDonateById(ID_POST, Donation_Raised)}>Donate</Button>
-                <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer>
-            </Modal>
-        {/* } */}
+        </Modal>
         </>
-        // <Modal
-        //     {...props}
-        //     // size="lg"
-        //     aria-labelledby="contained-modal-title-vcenter"
-        //     centered
-        //     >
-        //     <Modal.Header closeButton>
-        //         <Modal.Title id="contained-modal-title-vcenter">
-        //             <HeaderLogo/>
-        //         </Modal.Title>
-        //     </Modal.Header>
-        //     <Modal.Body>
-        //         <h4>Centered Modal</h4>
-        //         <p>
-        //         Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-        //         dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-        //         consectetur ac, vestibulum at eros.
-        //         </p>
-        //     </Modal.Body>
-        //     <Modal.Footer>
-        //         <Button onClick={() => updateInfoDonateById(ID_POST, Donation_Raised)}>Donate</Button>
-        //         <Button onClick={props.onHide}>Close</Button>
-        //     </Modal.Footer>
-        //     </Modal>
     )
 }

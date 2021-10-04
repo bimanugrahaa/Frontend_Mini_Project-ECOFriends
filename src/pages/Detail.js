@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useHistory, Redirect } from "react-router-dom";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Avatar from 'react-avatar';
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, ProgressBar } from "react-bootstrap";
 import HeaderLogo from "../components/HeaderLogo";
 import { useGetDonatePostById } from "../hooks/useGetDonatePost";
 import useSubscribeComments from "../hooks/useSubscribeComments";
@@ -12,8 +12,11 @@ import useDeleteComment from "../hooks/useDeleteComment";
 import useSubscribeInfo from "../hooks/useSubscribeInfo";
 import './Detail.css'
 import useUpdateComment from "../hooks/useUpdateComment";
+import NumberFormat from "react-number-format";
 import { auth } from "../firebase"; 
 import ModalPrivate from "../components/ModalPrivate";
+import Logo from '../components/Logo'
+import tree from '../assets/tree.png'
 
 export default function Detail(props) {
 
@@ -54,7 +57,8 @@ export default function Detail(props) {
         ID_COMMENT: 0,
         Comment_post: ""
     })
-    const [getRedirect, setRedirect] = useState("")
+    const [getEdited, setEdited] = useState(false)
+    const [show, setShow] = useState(false);
     // const [user, getUser] = useState([])
     const [commentPost, setCommentPost] = useState("")
     const {detailData, detailLoading, detailError} = useGetDonatePostById(ID);
@@ -72,6 +76,7 @@ export default function Detail(props) {
     const action = (ID) => {
         // getPostId(data?.donate_post.ID_POST)
         console.log("getInAction")
+        console.log("ID_USER", ID_USER)
         if (ID_USER !== '0') {
             console.log('go to donate')
             history.push(
@@ -85,36 +90,8 @@ export default function Detail(props) {
                 }
             )
         } else {
-            <Modal
-            {...props}
-            // size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            >
-            <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                    <HeaderLogo/>
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <h4>Centered Modal</h4>
-                <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                consectetur ac, vestibulum at eros.
-                </p>
-            </Modal.Body>
-            <Modal.Footer>
-                {/* <Button onClick={() => updateInfoDonateById(ID_POST, Donation_Raised)}>Donate</Button> */}
-                <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer>
-            </Modal>
-            // history.replace(
-            //     {
-            //         pathname: `/login`
-                    
-            //     }
-            // )
+            console.log("getInModal");
+            // return <ModalPrivate show={true}/>
         }
         // history.push(
         //     {
@@ -183,10 +160,11 @@ export default function Detail(props) {
 
     }
 
-    const updateCommentByPk = (ID_COMMENT, Comment_post) => {
+    const updateCommentByPk = (ID_COMMENT, Comment_post, isEdited) => {
         updateComment({variables: {
             ID_COMMENT: ID_COMMENT,
-            Comment_post: Comment_post
+            Comment_post: Comment_post,
+            isEdited: isEdited
         }})
     }
 
@@ -219,7 +197,9 @@ export default function Detail(props) {
     }
 
     const handleSubmitEdit = () => {
-        updateCommentByPk(getEdit.ID_COMMENT, getEdit.Comment_post)
+        setEdited(true)
+        console.log("getEdited", getEdited)
+        updateCommentByPk(getEdit.ID_COMMENT, getEdit.Comment_post, getEdited)
         setEdit({...getEdit,
         editState: !getEdit.editState,
         ID_COMMENT: 0})
@@ -246,7 +226,11 @@ export default function Detail(props) {
 
     return(
         <>
-        <HeaderLogo/>
+        {/* <HeaderLogo/> */}
+        <header className="shadow-sm p-2">
+            <Logo />
+        </header>
+        
         <p className="detail-title font-signika">{detail?.Title}</p>
         <div className="row detail-row-1 justify-content-center">
             <div className="col-md-10 detail-post font-signika">
@@ -256,54 +240,81 @@ export default function Detail(props) {
                 
             </div>
             <div className="col-md-2 detail-info">
-                <button onClick={() => action(ID)} type="button" className="btn btn-donate-now">Donate Now</button>
-                <p className="text-raised mb-0"><span className="donation-raised font-signika">Rp{info?.Donation_Raised}</span> Raised</p>
-                <p>of Goal Rp{info?.Donation_Total}</p>
+                <h4 className="text-center font-signika text-uppercase mt-2">Info</h4>
+                
+                
+                <ProgressBar now={info?.Donation_Raised} min={0} max={info?.Donation_Total} variant="success" style={{height: "15px"}} className="my-4 rounded-pill"/>
+                <div className="row mt-4">
+                <img src={tree} className="col-3"/>
+                <p className="text-raised mb-0 ps-0 col-9"><NumberFormat
+                    className="donation-raised font-signika"
+                    thousandsGroupStyle="thousand"
+                    value={info?.Donation_Raised}
+                    prefix="Rp"
+                    decimalSeparator=""
+                    displayType="text"
+                    type="tel"
+                    thousandSeparator={true}
+                    allowNegative={false} /> Raised of Goal Rp{info?.Donation_Total}</p>
+                {/* <p>of Goal Rp{info?.Donation_Total}</p> */}
+                </div>
+                <div className="text-center">
+                    <button onClick={() => action(ID)} type="button" className="btn btn-donate-now mx-auto my-4">Donate Now</button>
+                </div>
+                {/* <p className="text-raised mb-0"><span className="donation-raised font-signika">Rp{info?.Donation_Raised}</span> Raised</p>
+                <p>of Goal Rp{info?.Donation_Total}</p> */}
             </div>
         </div>
         <div className="row justify-content-center">
         <h4 className="text-support mt-5 mx-auto text-center">Support from #ECOFriends</h4>
-            {/* <div className=""> */}
+            <div className="row justify-content-center">
             <textarea name='commentPost' type="text" className="form-control form-comment font-signika mt-2" placeholder="Say something nice here" id="validationDefault02" onChange={onChange} required/>
             <button onClick={handleSubmit} className="btn btn-post-comment ms-2 mt-2 mb-5 font-signika">Add comment</button>
-            {/* </div> */}
+            </div>
             <div className="row  mt-4 mx-auto">
                 {commentsData?.comments.length === 0 ?
                     <h5> No comments </h5> :
                     commentsData?.comments.map((comment) => (
                         <div className="row justify-content-center">
-                            <div className="col-md-auto align-middle card-comment  ">
+                            <div className="col-md-auto align-middle card-comment bg-gray bg-gradient rounded-start">
                                 <Avatar name={comment.user.name} size={50} round={true}/>
                             </div>
-                            <div className="col-md-4 card-comment  ">
-                                <p>{comment.user.name}</p>
+                            <div className="col-md-4 card-comment bg-gray bg-gradient ">
+                                <p className="mb-0 fs-5">{comment.user.name}
+                                {comment.isEdited?
+                                <span className="text-muted"> (Edited) </span>
+                                :
+                                <span></span>
+                                }
+                                </p>
+                                <span className="text-muted">{comment.Date}</span>
                                 {getEdit.ID_COMMENT === comment.ID_COMMENT && getEdit.editState === true? 
                                 <div>
                                     <textarea name='commentPost' type="text" className="form-control form-comment-edit font-signika mt-2" placeholder="Say something nice here" id="validationDefault02" onChange={onChangeEdit} value={getEdit.Comment_post} required/>
-                                    <button onClick={handleSubmitEdit} className="btn btn-post-comment">Edit comment</button>
+                                    <button onClick={handleSubmitEdit} className="btn btn-post-comment mt-1">Edit comment</button>
                                 </div>
                                  :
-                                <p>{comment.Comment_post}</p>
+                                <p className="mt-2">{comment.Comment_post}</p>
                                 }
                                 {/* <textarea name='commentPost' type="text" className="form-control form-comment font-signika mt-2" placeholder="Say something nice here" id="validationDefault02" onChange={onChange} required/>
             <button onClick={handleSubmit} className="btn btn-post-comment ms-2 mt-2 mb-5 font-signika">Add comment</button> */}
                                 {/* {comment.Comment_post} */}
                             </div>
                             {comment.ID_USER === ID_USER ? 
-                                <div className="col-md-auto card-comment">
+                                <div className="col-md-auto card-comment bg-gray bg-gradient rounded-end">
                                     <i onClick={() => handleEdit(comment.ID_COMMENT, comment.Comment_post)} class="fas fa-edit me-2"></i>
                                     <i onClick={() => deleteCommentByPk(comment.ID_COMMENT)} class="fas fa-trash-alt"></i>
                                 </div>   :
-                                <div className="col-md-auto empty-comment"></div> 
+                                <div className="col-md-auto empty-comment bg-gray bg-gradient rounded-end"></div> 
                             }
                                                   
                         </div>
                         
                     ))}
             </div>
-
-        </div>
             
+        </div>
+        {/* <ModalPrivate /> */}
             
         </>
     )

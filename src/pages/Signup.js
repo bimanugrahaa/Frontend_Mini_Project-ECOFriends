@@ -7,6 +7,7 @@ import { Redirect, useHistory } from 'react-router';
 import { signIn, register, signOutUser } from '../auth/authUser';
 import Home from './Home';
 import { Link } from 'react-router-dom';
+import useInsertUser from '../hooks/useInsertUser';
 
 export default function Signup() {
 
@@ -26,6 +27,16 @@ export default function Signup() {
     const [displayName, setDisplayName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [getUser, setUser] = useState(true)
+
+    //Insert user to database
+    const {insertUser, loadingInsertUser} = useInsertUser();
+    const InsertUserOne = (ID_USER, email, displayName) => {
+        insertUser({variables: {
+            ID_USER: ID_USER,
+            email: email,
+            name: displayName
+        }})
+    }
 
     useEffect(() => {
         return auth.onAuthStateChanged((user) => {
@@ -109,6 +120,8 @@ export default function Signup() {
             setLoggedIn(true);
             setUsername(auth.user.email);
             auth.user.updateProfile({displayName: displayName})
+            InsertUserOne(auth.user.uid, email, displayName)
+            console.log("success", auth.user.uid, email, displayName)
             // resetForm();
           })
           .catch((error) => {
