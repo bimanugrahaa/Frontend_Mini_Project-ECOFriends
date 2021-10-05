@@ -17,6 +17,7 @@ import { auth } from "../firebase";
 import ModalPrivate from "../components/ModalPrivate";
 import Logo from '../components/Logo'
 import tree from '../assets/tree.png'
+import Loader from "react-loader-spinner";
 
 export default function Detail(props) {
 
@@ -57,7 +58,7 @@ export default function Detail(props) {
         ID_COMMENT: 0,
         Comment_post: ""
     })
-    const [getEdited, setEdited] = useState(false)
+    const [getEdited, setEdited] = useState(true)
     const [show, setShow] = useState(false);
     // const [user, getUser] = useState([])
     const [commentPost, setCommentPost] = useState("")
@@ -70,9 +71,13 @@ export default function Detail(props) {
     // const {userDataById, userErrorById } = useGetUserById(ID_USER)
     // const {userData, userError} = useGetAllUser();
     // console.log("commentsData", commentsData.donate_post)
+    
 
     console.log('commentsData out', commentsData)
     const history = useHistory();
+    const goBack = () => {
+        history.goBack()
+    }
     const action = (ID) => {
         // getPostId(data?.donate_post.ID_POST)
         console.log("getInAction")
@@ -91,6 +96,7 @@ export default function Detail(props) {
             )
         } else {
             console.log("getInModal");
+            setShow(true)
             // return <ModalPrivate show={true}/>
         }
         // history.push(
@@ -197,6 +203,7 @@ export default function Detail(props) {
     }
 
     const handleSubmitEdit = () => {
+        console.log("getEditedIn")
         setEdited(true)
         console.log("getEdited", getEdited)
         updateCommentByPk(getEdit.ID_COMMENT, getEdit.Comment_post, getEdited)
@@ -223,6 +230,11 @@ export default function Detail(props) {
         // fetchUser();
     })
 
+    // if (detailLoading || commentsLoading || infoLoading === true) {
+    //     return (
+    //     <Loader className="text-center mx-auto" type="TailSpin" color="#528A62" height={80} width={80}/>
+    //     )
+    // }
 
     return(
         <>
@@ -230,8 +242,16 @@ export default function Detail(props) {
         <header className="shadow-sm p-2">
             <Logo />
         </header>
-        
-        <p className="detail-title font-signika">{detail?.Title}</p>
+        {detailLoading || commentsLoading || infoLoading === true?
+        <div className="my-5 align-middle">
+            <Loader className="text-center mx-auto" type="TailSpin" color="#528A62" height={80} width={80}/>
+        </div>
+        :
+        <>
+        <div className=" mx-5 my-2 back-button">
+                            <i onClick={goBack} className="fa fa-chevron-left fa donate-cursor" aria-hidden="true"><span className="ms-2 fs-5 font-signika">Back</span></i>
+                        </div>
+            <p className="detail-title font-signika">{detail?.Title}</p>
         <div className="row detail-row-1 justify-content-center">
             <div className="col-md-10 detail-post font-signika">
                 <img className="detail-img shadow-lg" src={detail?.IMAGE_URL}/>
@@ -259,7 +279,7 @@ export default function Detail(props) {
                 {/* <p>of Goal Rp{info?.Donation_Total}</p> */}
                 </div>
                 <div className="text-center">
-                    <button onClick={() => action(ID)} type="button" className="btn btn-donate-now mx-auto my-4">Donate Now</button>
+                    <button onClick={() => action(ID)} className="btn btn-donate-now mx-auto my-4">Donate Now</button>
                 </div>
                 {/* <p className="text-raised mb-0"><span className="donation-raised font-signika">Rp{info?.Donation_Raised}</span> Raised</p>
                 <p>of Goal Rp{info?.Donation_Total}</p> */}
@@ -267,20 +287,31 @@ export default function Detail(props) {
         </div>
         <div className="row justify-content-center">
         <h4 className="text-support mt-5 mx-auto text-center">Support from #ECOFriends</h4>
-            <div className="row justify-content-center">
+            {ID_USER !== "0"?
+                <div className="row justify-content-center">
+                    <textarea name='commentPost' type="text" className="form-control form-comment font-signika mt-2" placeholder="Say something nice here" id="validationDefault02" onChange={onChange} required/>
+                    <button onClick={handleSubmit} className="btn btn-post-comment ms-2 mt-2 mb-5 font-signika">Add comment</button>
+                </div>
+            :
+                <div className="text-center card-comment-nologin card mx-auto mt-4">
+                    
+                    <h4 className="my-auto"><i class="fas fa-key"></i> <NavLink to="/login" className="text-success ms-2">Sign in</NavLink> or <NavLink to="/signup" className="text-success">sign up</NavLink> to comment! </h4>
+                </div>
+            }
+            {/* <div className="row justify-content-center">
             <textarea name='commentPost' type="text" className="form-control form-comment font-signika mt-2" placeholder="Say something nice here" id="validationDefault02" onChange={onChange} required/>
             <button onClick={handleSubmit} className="btn btn-post-comment ms-2 mt-2 mb-5 font-signika">Add comment</button>
-            </div>
+            </div> */}
             <div className="row  mt-4 mx-auto">
                 {commentsData?.comments.length === 0 ?
-                    <h5> No comments </h5> :
+                    <h5 className="text-center my-5"> No comments </h5> :
                     commentsData?.comments.map((comment) => (
                         <div className="row justify-content-center">
-                            <div className="col-md-auto align-middle card-comment bg-gray bg-gradient rounded-start">
+                            <div className="col-md-auto align-middle card-comment bg-comment bg-gradient rounded-start">
                                 <Avatar name={comment.user.name} size={50} round={true}/>
                             </div>
-                            <div className="col-md-4 card-comment bg-gray bg-gradient ">
-                                <p className="mb-0 fs-5">{comment.user.name}
+                            <div className="col-md-4 card-comment bg-comment bg-gradient ">
+                                <p className="mb-0 fs-6">{comment.user.name}
                                 {comment.isEdited?
                                 <span className="text-muted"> (Edited) </span>
                                 :
@@ -301,11 +332,13 @@ export default function Detail(props) {
                                 {/* {comment.Comment_post} */}
                             </div>
                             {comment.ID_USER === ID_USER ? 
-                                <div className="col-md-auto card-comment bg-gray bg-gradient rounded-end">
+                                <div className="col-md-auto card-comment bg-comment bg-gradient rounded-end">
+                                    {/* <i onClick={() => handleEdit(comment.ID_COMMENT, comment.Comment_post)} class="text-muted">Edit</i>
+                                    <i onClick={() => deleteCommentByPk(comment.ID_COMMENT)} class="text-muted ms-1">Delete</i> */}
                                     <i onClick={() => handleEdit(comment.ID_COMMENT, comment.Comment_post)} class="fas fa-edit me-2"></i>
                                     <i onClick={() => deleteCommentByPk(comment.ID_COMMENT)} class="fas fa-trash-alt"></i>
                                 </div>   :
-                                <div className="col-md-auto empty-comment bg-gray bg-gradient rounded-end"></div> 
+                                <div className="col-md-auto empty-comment bg-comment bg-gradient rounded-end"></div> 
                             }
                                                   
                         </div>
@@ -314,7 +347,10 @@ export default function Detail(props) {
             </div>
             
         </div>
-        {/* <ModalPrivate /> */}
+        <ModalPrivate show={show} />
+        </>
+        }
+        
             
         </>
     )

@@ -3,8 +3,8 @@ import { auth } from "../firebase";
 import { signOutUser } from "../auth/authUser";
 import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import logo from "../assets/logo.png"
 import './Header.css'
+import Logo from "./Logo";
 
 export default function Header() {
 
@@ -14,6 +14,7 @@ export default function Header() {
     /* Auth check if any user active from auth */
     auth.onAuthStateChanged((user) => {
         setUser(user)
+        console.log("user", user)
         if (user === null) {
             setDisplayName("Guests")
         } else {
@@ -25,11 +26,10 @@ export default function Header() {
 
     return (
         <>
-        <header className="navbar fixed-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 shadow-sm">
-            <a href="/" className="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <img className="ms-5 me-2" src={logo} alt="ECOFriends logo" style={{width:"60px", height:"60px"}}/>
-                <h1 className="font-signika logo m-0">ECOFriends</h1>
-            </a>
+        <header className="navbar fixed-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 shadow-sm">
+            <header className="ps-2">
+                <Logo />
+            </header>
 
             <ul className="nav nav-pills">
                 <button href="/about-us" className="me-4 about-us font-roboto btn">About us</button>
@@ -43,7 +43,13 @@ export default function Header() {
                     <Dropdown className="d-inline ms-1 me-4 justify-content-center p-auto font-signika">
                         <Dropdown.Toggle id="dropdown-autoclose-true" variant="success" className="sign-out">Hi, {getDisplayName}! </Dropdown.Toggle>
                         <Dropdown.Menu>
-                            <Dropdown.Item onClick={signOutUser}>Sign Out</Dropdown.Item>
+                            <Dropdown.Item 
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        signOutUser()
+                                        window.location.reload()
+                                    }, 1000);
+                                }}>Sign Out</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </>

@@ -12,12 +12,12 @@ export default function Logo(props){
 
     return(
         <>
-        {props.className === "text-center"? 
+        {props.className === "col-md-11 text-center"? 
             <div className="col-md-11 my-auto text-center">
                 <img src={logo} width="200px" className="donate-cursor" onClick={goHome} alt="logo"/>
             </div>
         :
-            <div className="col-md-11 my-auto">
+            <div className="my-auto">
                 <img src={logo} width="200px" className="donate-cursor" onClick={goHome} alt="logo"/>
             </div>
         }

@@ -32,7 +32,7 @@ export default function ModalDonate(props) {
             Donation_Raised: Donation_Raised 
         }})
         setSuccessState(true)
-        props.onHide()                                              //Hide modal when update successfully
+        props.onHide()                                              //Hide modal when update success
     }
 
     /* Get active user */
@@ -43,12 +43,7 @@ export default function ModalDonate(props) {
 
     return (
         <>
-        <Modal
-            {...props}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            contentClassName="border-0"
-            >
+        <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered contentClassName="border-0" >
             <Modal.Header className="border-0">
                 <Modal.Title id="contained-modal-title-vcenter" >
                     <h2>Hi, <span className="text-success">{displayName}</span>!</h2>

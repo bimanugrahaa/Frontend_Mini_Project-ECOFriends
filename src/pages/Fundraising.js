@@ -3,10 +3,10 @@ import Loader from 'react-loader-spinner'
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom"
 import { ProgressBar } from "react-bootstrap";
+import NumberFormat from "react-number-format";
 import useSubscribeDonatePost from "../hooks/useSubscribeDonatePost";
+import Logo from '../components/Logo'
 import './Fundraising.css'
-
-// import useGetPassenger, { useGetPassengerById } from "../hooks/useGetPassenger";
 
 export default function Fundraising() {
 
@@ -42,8 +42,10 @@ export default function Fundraising() {
 
     return(
         <>
-        <HeaderLogo/>
-
+        {/* <HeaderLogo/> */}
+        <header className="shadow-sm p-2">
+            <Logo />
+        </header>
         <h1 className="text-center font-signika text-success mt-5">What's happening?</h1>
         <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mx-5 my-5">
             {loading === false? 
@@ -59,7 +61,30 @@ export default function Fundraising() {
                                 <div className="card-footer bg-white">
                                     {/* {result.Donation_Raised > result.Donation_Total? : } */}
                                     <ProgressBar now={result.Donation_Raised} min={0} max={result.Donation_Total} variant="success" style={{height: "8px"}} className="my-2"/>
-                                    <small className="text-muted"><span className="fundraising-raised text-signika fw-bold">Rp{result.Donation_Raised}  Raised </span>of Rp{result.Donation_Total}</small>
+                                    <small className="text-muted">
+                                        <span className="fundraising-raised text-signika fw-bold">
+                                            <NumberFormat
+                                                className="donation-raised font-signika"
+                                                thousandsGroupStyle="thousand"
+                                                value={result?.Donation_Raised}
+                                                prefix="Rp"
+                                                decimalSeparator=""
+                                                displayType="text"
+                                                type="tel"
+                                                thousandSeparator={true}
+                                                allowNegative={false} /> Raised 
+                                        </span> of 
+                                            <NumberFormat
+                                                className=" font-signika"
+                                                thousandsGroupStyle="thousand"
+                                                value={result?.Donation_Total}
+                                                prefix=" Rp"
+                                                decimalSeparator=""
+                                                displayType="text"
+                                                type="tel"
+                                                thousandSeparator={true}
+                                                allowNegative={false} />
+                                    </small>
                                 </div>
                             </div>
                         </div>

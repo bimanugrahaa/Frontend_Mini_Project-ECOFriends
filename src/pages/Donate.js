@@ -53,7 +53,7 @@ export default function Donate(props) {
                         <div className="col-md-1 my-auto back-button">
                             <i onClick={goBack} className="fa fa-chevron-left fa-2x donate-cursor" aria-hidden="true"></i>
                         </div>
-                        <Logo className="text-center"/>
+                        <Logo className="col-md-11 text-center"/>
                     </div>
                     <p className="nominal-text-first font-signika mx-auto">Choose one below</p>
                     <button type="button" value={5000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 5000</button>

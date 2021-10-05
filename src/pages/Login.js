@@ -1,40 +1,34 @@
-import image from '../assets/Login-images.jpg'
-import HeaderLogo from '../components/HeaderLogo'
 import './Login.css'
 import { auth } from '../firebase'
 import { useEffect, useState } from 'react';
-import { Redirect, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-// import { signIn, register, signOutUser } from '../auth/authUser';
-import Home from './Home';
+import Logo from '../components/Logo';
+import Loader from 'react-loader-spinner';
+import { Toast, ToastContainer } from 'react-bootstrap';
 
 export default function Login() {
     
     const history = useHistory();
 
+    /* useState */
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    const [username, setUsername] = useState('Guest');
-    const [loggedIn, setLoggedIn] = useState(false);
-    const [getUser, setUser] = useState(true)
+    const [loading, setLoading] = useState(false);
+    const [getToast, setToast] = useState(false);
 
+    /* Get active user */
     useEffect(() => {
         return auth.onAuthStateChanged((user) => {
-            console.log("user", user)
-            console.log("getUser", getUser)
             if (user) {
-                setUser(true)
                 history.push({
                     pathname: `/`
                 })
-            } else {
-                setUser(false)
-            }
-          });
-    },[])
+            }});
+        })
 
+    /* signIn using firebase auth */
     const signIn = async(event) => {
         event.preventDefault();
     
@@ -42,74 +36,48 @@ export default function Login() {
         await auth
           .signInWithEmailAndPassword(email, password)
           .then((auth) => {
-            setMessage('You have successfully logged in!');
-            setLoggedIn(true);
-            setUsername(auth.user.email);
             setLoading(false)
-            // console.log(auth.user)
-            // resetForm();
           })
-          .catch((error) => alert(error.message));
+          .catch((error) => {
+                setLoading(false)
+                setToast(true)
+                setMessage(error.message)
+            });
       };
-    
-      const register = (event) => {
-        event.preventDefault();
-        auth
-          .createUserWithEmailAndPassword(email, password)
-          .then((auth) => {
-            setMessage('Your account has been created successfully!');
-            setLoggedIn(true);
-            setUsername(auth.user.email);
-            // resetForm();
-          })
-          .catch((error) => alert(error.message));
-      };
-    
-      const signOutUser = () => {
-        auth
-          .signOut()
-          .then(() => {
-            setMessage('Hello there!');
-            setUsername('Guest');
-            setLoggedIn(false);
-          })
-          .catch((error) => alert(error.message));
-      };
-      
-    if (loading) {
-        return <h1>Loading</h1>
-    }
 
     return (
         <div className="jumbotron background-image login-page">
-            <HeaderLogo/>
+            <header className="p-2 col-14">
+                <Logo />
+            </header>
+            {loading?
+                <Loader type="TailSpin" color="#528A62" height={80} width={80}/>
+            :
+            <>
             <form className="container col-md-2 col-sm-8 login font-signika mx-auto card card-signup border-0 shadow">
                 <h1 className="signin-text">Sign In</h1>
-                    <div className="row g-3">
-                        <div className="contact-form">
-                            <label htmlFor="validationDefault01" className="form-label my-1">Email</label>
-                            <input name='username' type="text" className="form-control" id="validationDefault01" value={email} onChange={(event) => setEmail(event.target.value)} required/>
-                            {/* <span className="error-msg">{err.name}</span><br/> */}
-                            {/* <div className="is-invalid">Full name cannot be empty</div> */}
-                        </div>
-                        <div className="contact-form">
-                            <label htmlFor="validationDefault02" className="form-label my-1">Password</label>
-                            <input name='password' type="password" className="form-control" id="validationDefault02" value={password} onChange={(event) => setPassword(event.target.value)} required/>
-                            {/* <span className="error-msg">{err.mail}</span><br/> */}
-                            {/* <div className="is-invalid">Email address cannot be empty</div> */}
-                        </div>
-                        <div className="col-12">
-                            {/* <button onClick={() => goReviewMessage()} className="btn btn-contact" type="submit">Submit</button> */}
-                            <button className="mt-4 btn signin-btn" type="submit" onClick={signIn}>SIGN IN</button>
-                        </div>
+                <div className="row g-3">
+                    <div className="contact-form">
+                        <label htmlFor="validationDefault01" className="form-label my-1">Email</label>
+                        <input name='username' type="text" className="form-control" id="validationDefault01" value={email} onChange={(event) => setEmail(event.target.value)} required/>
                     </div>
+                    <div className="contact-form">
+                        <label htmlFor="validationDefault02" className="form-label my-1">Password</label>
+                        <input name='password' type="password" className="form-control" id="validationDefault02" value={password} onChange={(event) => setPassword(event.target.value)} required/>
+                    </div>
+                    <div className="col-12">
+                        <button className="mt-4 btn signin-btn" type="submit" onClick={signIn}>SIGN IN</button>
+                    </div>
+                </div>
             </form>
-            {/* <button className="mt-4 btn signin-btn" type="button" onClick={signOutUser}>SIGN OUT</button> */}
             <h6 className="mt-4 text-light font-signika">Don't have an account? <Link to='/signup' className="text-success">Sign Up!</Link></h6>
-            {console.log("auth", auth.user)}
-            
+            </>
+            }
+            <ToastContainer position="bottom-center" className="mb-5 border-0">
+                <Toast show={getToast} onClose={() => setToast(false)} className="border-0" bg="danger" delay={5000} autohide>
+                        <Toast.Body>{message}</Toast.Body>
+                </Toast>
+            </ToastContainer>            
         </div>
-
-
     )
 }
