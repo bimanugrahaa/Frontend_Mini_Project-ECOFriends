@@ -3,7 +3,6 @@ import { NavLink, useHistory, Redirect } from "react-router-dom";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Avatar from 'react-avatar';
 import { Modal, Button, ProgressBar } from "react-bootstrap";
-import HeaderLogo from "../components/HeaderLogo";
 import { useGetDonatePostById } from "../hooks/useGetDonatePost";
 import useSubscribeComments from "../hooks/useSubscribeComments";
 import useInsertComment from "../hooks/useInsertComment";
@@ -23,24 +22,13 @@ export default function Detail(props) {
 
     const [ID_USER, getActiveUser] = useState("")
     auth.onAuthStateChanged((user) => {
-        console.log("user detail", user)
-
         if (user === null) {
             getActiveUser('0')
         } else {
             getActiveUser(user.uid);
         }
-        
-
-        // console.log("getUser", getUser)
-        // if (user) {
-        //     setUser(true)
-        // } else {
-        //     setUser(false)
-        // }
-        // setUser({ user: user });
       })
-    // console.log(auth)
+
     const urlNow = props.location.pathname
     const uriSplit = urlNow.split('/')
     console.log(uriSplit[2])
@@ -60,7 +48,6 @@ export default function Detail(props) {
     })
     const [getEdited, setEdited] = useState(true)
     const [show, setShow] = useState(false);
-    // const [user, getUser] = useState([])
     const [commentPost, setCommentPost] = useState("")
     const {detailData, detailLoading, detailError} = useGetDonatePostById(ID);
     const {commentsData, commentsLoading, commentsError} = useSubscribeComments(ID);
@@ -68,10 +55,6 @@ export default function Detail(props) {
     const {insertComment, loadingInsertComment} = useInsertComment();
     const {deleteComment, loadingDeleteComment} = useDeleteComment();
     const {updateComment, loadingUpdateComment} = useUpdateComment();
-    // const {userDataById, userErrorById } = useGetUserById(ID_USER)
-    // const {userData, userError} = useGetAllUser();
-    // console.log("commentsData", commentsData.donate_post)
-    
 
     console.log('commentsData out', commentsData)
     const history = useHistory();
@@ -79,7 +62,6 @@ export default function Detail(props) {
         history.goBack()
     }
     const action = (ID) => {
-        // getPostId(data?.donate_post.ID_POST)
         console.log("getInAction")
         console.log("ID_USER", ID_USER)
         if (ID_USER !== '0') {
@@ -97,18 +79,8 @@ export default function Detail(props) {
         } else {
             console.log("getInModal");
             setShow(true)
-            // return <ModalPrivate show={true}/>
+
         }
-        // history.push(
-        //     {
-        //         pathname: `/donate`,
-        //         state: {
-        //             ID_POST: ID,
-        //             Donation_Raised: info?.Donation_Raised
-        //         }
-                
-        //     }
-        // )
         console.log("ID_POST", ID)
     }
 
@@ -139,15 +111,6 @@ export default function Detail(props) {
             console.log("error fetch info", error)
         }
     }
-
-    // const fetchUser = async() => {
-    //     try{
-    //         await getUser(userDataById?.user)
-    //         console.log("user", user)
-    //     } catch (error) {
-    //         console.log("error fetch user", error)
-    //     }
-    // }
     
     const insertCommentOne = (Comment_post) => {
         insertComment({variables: {
@@ -211,34 +174,16 @@ export default function Detail(props) {
         editState: !getEdit.editState,
         ID_COMMENT: 0})
     }
-    
-    // getPostDetail({variables: {
-    //     ID_POST: ID
-    // }})
-    // console.log("ID_POST", ID_POST)
-    // console.log("getPostDetail", detailData.donate_post)
-    
-    // useEffect(() => {
-    //     getDetail(detailData.donate_post[0])
-    // }, [])
-    // console.log("detail", detailData)
 
     useEffect(() => {
         fetchDetail();
         fetchComments();
         fetchInfo();
-        // fetchUser();
     })
 
-    // if (detailLoading || commentsLoading || infoLoading === true) {
-    //     return (
-    //     <Loader className="text-center mx-auto" type="TailSpin" color="#528A62" height={80} width={80}/>
-    //     )
-    // }
 
     return(
         <>
-        {/* <HeaderLogo/> */}
         <header className="shadow-sm p-2">
             <Logo />
         </header>
@@ -262,8 +207,17 @@ export default function Detail(props) {
             <div className="col-md-2 detail-info">
                 <h4 className="text-center font-signika text-uppercase mt-2">Info</h4>
                 
+                <h5 className="text-center font-signika text-success mb-0"> <NumberFormat
+                    thousandsGroupStyle="thousand"
+                    value={info?.Donates}
+                    decimalSeparator=""
+                    displayType="text"
+                    type="tel"
+                    thousandSeparator={true}
+                    allowNegative={false} /> Donates</h5>
+                <ProgressBar now={info?.Donation_Raised} min={0} max={info?.Donation_Total} variant="success" style={{height: "15px"}} className="mt-2 mb-4 rounded-pill"/>
                 
-                <ProgressBar now={info?.Donation_Raised} min={0} max={info?.Donation_Total} variant="success" style={{height: "15px"}} className="my-4 rounded-pill"/>
+                
                 <div className="row mt-4">
                 <img src={tree} className="col-3"/>
                 <p className="text-raised mb-0 ps-0 col-9"><NumberFormat

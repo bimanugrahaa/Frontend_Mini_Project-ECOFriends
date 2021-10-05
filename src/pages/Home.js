@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
 import image from "../assets/Home-image.jpg"
 import Header from "../components/Header"
-import './Home.css'
+import '../css/Home.css'
 
 export default function Home() {
     
@@ -18,9 +18,8 @@ export default function Home() {
                     <h5 className="text-3">With ECOFriends, we take care the nature for the world</h5>
                     <NavLink to="/fundraising" type="button" className="mt-4 btn btn-happening shadow-lg">What's happening?</NavLink>
                 </div>
-
                 <div className="col-md-5 image">
-                    <img src={image} alt="Leaf on home" style={{width:"574px", height:"574px"}}/>
+                    <img src={image} alt="Leaf on home" className="image-leaf"/>
                 </div>
             </div>
         </div>

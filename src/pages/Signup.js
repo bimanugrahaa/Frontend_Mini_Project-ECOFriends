@@ -1,12 +1,12 @@
-import { auth } from '../firebase'
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Toast, ToastContainer } from 'react-bootstrap';
+import { auth } from '../firebase'
 import useInsertUser from '../hooks/useInsertUser';
 import Logo from '../components/Logo';
 import Loader from 'react-loader-spinner';
-import './Login.css'
+import '../css/Account.css'
 
 
 export default function Signup() {

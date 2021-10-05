@@ -1,5 +1,5 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { GetDonatePost, GetDonatePostById } from "../graphql/query";
+import { GetDonatePost, GetDonatePostById, OrderDonatePostByComments } from "../graphql/query";
 import { SubscriptionDonatePost } from "../graphql/subscribe";
 
 // function useGetDonatePost() {
@@ -35,4 +35,15 @@ function useGetDonatePostById(ID_POST) {
     }
 }
 
-export { useGetDonatePostById }
+function useGetTrendingDonatePost() {
+    const [getTrending, {data: trendingData, loading: trendingLoading, error: trendingError}] = useLazyQuery(OrderDonatePostByComments)
+
+    return {
+        getTrending,
+        trendingData,
+        trendingLoading,
+        trendingError
+    }
+}
+
+export { useGetDonatePostById, useGetTrendingDonatePost }

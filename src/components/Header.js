@@ -3,8 +3,8 @@ import { auth } from "../firebase";
 import { signOutUser } from "../auth/authUser";
 import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
-import './Header.css'
 import Logo from "./Logo";
+import '../css/Header.css'
 
 export default function Header() {
 
@@ -20,8 +20,6 @@ export default function Header() {
         } else {
             setDisplayName(user.displayName)
         }
-        
-        console.log("getUserActive Header", getUserActive)
     })
 
     return (
@@ -30,7 +28,6 @@ export default function Header() {
             <header className="ps-2">
                 <Logo />
             </header>
-
             <ul className="nav nav-pills">
                 <button href="/about-us" className="me-4 about-us font-roboto btn">About us</button>
                 {getUserActive === null? 

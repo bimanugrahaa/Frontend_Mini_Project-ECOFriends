@@ -33,14 +33,25 @@ mutation MyMutation($ID_COMMENT: Int!, $Comment_post: String!, $isEdited: Boolea
   }
 `
 
+// const UpdateInfoDonate = gql`
+// mutation MyMutation($ID_POST: Int!, $Donation_Raised: numeric!) {
+//     update_donate_post_by_pk(pk_columns: {ID_POST: $ID_POST}, _set: {Donation_Raised: $Donation_Raised}) {
+//       ID_POST
+//       Donation_Total
+//       Donation_Raised
+//     }
+//   }
+// `
+
 const UpdateInfoDonate = gql`
 mutation MyMutation($ID_POST: Int!, $Donation_Raised: numeric!) {
-    update_donate_post_by_pk(pk_columns: {ID_POST: $ID_POST}, _set: {Donation_Raised: $Donation_Raised}) {
-      ID_POST
-      Donation_Total
-      Donation_Raised
-    }
+  update_donate_post_by_pk(pk_columns: {ID_POST: $ID_POST}, _inc: {Donates: 1}, _set: {Donation_Raised: $Donation_Raised}) {
+    ID_POST
+    Donation_Total
+    Donation_Raised
+    Donates
   }
+}
 `
 
 const InsertUser = gql`

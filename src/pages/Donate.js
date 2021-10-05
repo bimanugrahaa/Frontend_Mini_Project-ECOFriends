@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import ModalDonate from "../components/ModalDonate";
-import './Donate.css';
 import Logo from '../components/Logo'
+import '../css/Donate.css';
 
 
 export default function Donate(props) {
@@ -27,12 +27,12 @@ export default function Donate(props) {
     const handleShow = (e) => {
         setShow(true)
         setDonationInput(e.target.value)
-        setUpdatedDonation(Donation_Raised+parseInt(getDonationInput))
+        setUpdatedDonation(Donation_Raised+parseInt(e.target.value))
     };
 
     const handleShowNominal = (e) => {
         if (getDonationInput < 1000) {
-            setErr("Sorry minimum donation is Rp 1000")
+            setErr("Sorry minimum donation amount is Rp 1000")
         } else {
             setErr("")
             setShow(true)
@@ -60,7 +60,7 @@ export default function Donate(props) {
                     <button type="button" value={10000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 10000</button>
                     <button type="button" value={20000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 20000</button>
                     <button type="button" value={50000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 50000</button>
-                    <button type="button" value={100000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 100000</button>
+                    <button type="button" value="100000" className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 100000</button>
                     <h6 className="font-signika mx-auto my-2">OR</h6>
                     <h5 className="font-signika my-1 mx-auto">Another nominal</h5>
                     <div className="form-nominal form-control mx-auto">

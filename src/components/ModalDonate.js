@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { auth } from "../firebase";
 import Loader from "react-loader-spinner";
 import useUpdateInfoDonate from "../hooks/useUpdateInfoDonate";
-import './ModalDonate.css'
+import '../css/ModalDonate.css'
 import successAnim from '../assets/success.gif'
 
 export default function ModalDonate(props) {

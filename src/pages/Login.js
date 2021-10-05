@@ -1,14 +1,14 @@
-import './Login.css'
-import { auth } from '../firebase'
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
-import Logo from '../components/Logo';
-import Loader from 'react-loader-spinner';
 import { Toast, ToastContainer } from 'react-bootstrap';
+import { auth } from '../firebase'
+import Loader from 'react-loader-spinner';
+import Logo from '../components/Logo';
+import '../css/Account.css'
 
 export default function Login() {
-    
+
     const history = useHistory();
 
     /* useState */
@@ -31,7 +31,7 @@ export default function Login() {
     /* signIn using firebase auth */
     const signIn = async(event) => {
         event.preventDefault();
-    
+
         setLoading(true)
         await auth
           .signInWithEmailAndPassword(email, password)
@@ -71,8 +71,7 @@ export default function Login() {
                 </div>
             </form>
             <h6 className="mt-4 text-light font-signika">Don't have an account? <Link to='/signup' className="text-success">Sign Up!</Link></h6>
-            </>
-            }
+            </>}
             <ToastContainer position="bottom-center" className="mb-5 border-0">
                 <Toast show={getToast} onClose={() => setToast(false)} className="border-0" bg="danger" delay={5000} autohide>
                         <Toast.Body>{message}</Toast.Body>

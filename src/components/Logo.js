@@ -1,5 +1,5 @@
-import logo from '../assets/Logo-MiniProject.png';
 import { useHistory } from "react-router-dom";
+import logo from '../assets/Logo-MiniProject.png';
 
 
 export default function Logo(props){

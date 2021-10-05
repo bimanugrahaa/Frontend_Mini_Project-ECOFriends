@@ -1,9 +1,6 @@
-import logo from './logo.svg';
-import './App.css';
+import './css/App.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from './components/Header';
 import Home from './pages/Home';
-import HeaderLogo from './components/HeaderLogo';
 import Login from './pages/Login';
 import Donate from './pages/Donate';
 import Fundraising from './pages/Fundraising';
@@ -11,14 +8,6 @@ import Detail from './pages/Detail';
 import Signup from './pages/Signup';
 
 function App() {
-  // return (
-  //   <div className="App">
-  //     {/* <Header/>
-  //     <Home/> */}
-  //     <Donate/>
-  //   </div>
-  // );
-
   return(
     <BrowserRouter>
       <Switch>
