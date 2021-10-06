@@ -12,3 +12,15 @@
 .select-filter{
     width: 150px;
 }
+
+.select-fundraising{
+    border-color: #528A62;
+}
+
+.col-right{
+    margin-left: 100%;
+}
+
+.btn-search{
+    height: 40px;
+}

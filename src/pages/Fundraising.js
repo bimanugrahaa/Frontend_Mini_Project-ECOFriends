@@ -7,13 +7,14 @@ import Logo from '../components/Logo'
 import '../css/Fundraising.css'
 import DropdownItem from "@restart/ui/esm/DropdownItem";
 import { useEffect, useState } from "react";
-import { useGetTrendingDonatePost } from "../hooks/useGetDonatePost";
+import { useGetSearchDonatePost, useGetTrendingDonatePost } from "../hooks/useGetDonatePost";
 
 export default function Fundraising() {
 
     /* Subscribe post */
     const {data, loading, error} = useSubscribeDonatePost();
     const {getTrending, trendingData, trendingLoading, trendingError} = useGetTrendingDonatePost();
+    
     
     const history = useHistory();
     const action = (ID) => {
@@ -28,46 +29,48 @@ export default function Fundraising() {
     }
 
     const [dropdownInput, setDropdownInput] = useState('ALL')
-    const trendingPost = () => {
-        // console.log('trendingpost')
-        // getTrending()
-        // console.log(dataTrending)
-        // try{
-        //     await getTrending();
-        //     console.log("detail", errorTrending)
-        // } catch (error) {
-        //     console.log("error fetch detail", error)
-        // }
-    }
+
 
     const [dataList, getDataList] = useState([])
-    const handleChange = async (e) => {
-        const value = e.target.value;
-        getTrending()
-        setDropdownInput(value)
-        if (value === "TRENDING") {
-            try{
-                await getTrending();
-                getDataList(trendingData)
-                console.log("detail", trendingData)
-            } catch (error) {
-                console.log("error fetch detail", error)
-            }
-            // await getTrending()
-            // await getDataList(trendingData)
-            // console.log(trendingData)
-        } 
-        if (value === "ALL") {
-            await getDataList(data)
-            console.log("data")
-            console.log(data)
+
+    const [searchInput, setSearchInput] = useState()
+    const [searchState, setSearchState] = useState(false)
+    const {getSearch, searchData, searchLoading} = useGetSearchDonatePost(searchInput);
+
+    console.log(searchInput)
+    const handleSearch = async() => {
+        setSearchState(true)
+        try {
+            await getSearch(searchInput);
+            await getDataList(searchData);
+            setSearchState(false)
+        } catch (error) {
+            console.log("search error", error)
         }
-        // getDataList(trendingData)
     }
 
-    console.log("trendingData", trendingData)
-    console.log("data", data)
-    console.log("dataList", dataList)
+    
+
+    useEffect(() => {
+        if (searchState === false && dropdownInput === "ALL") {
+            
+            getDataList(data)
+            console.log("ALL", dataList)
+        }
+        if (searchState === false && dropdownInput === "TRENDING") {
+            getTrending()
+            getDataList(trendingData)
+            console.log("TRENDING", dataList)
+        }
+        if (searchState) {
+            getSearch(searchInput)
+            getDataList(searchData)
+            console.log("search", dataList)
+        }
+    }, [dropdownInput, data, trendingData, searchData])
+
+    
+    
 
     return(
         <>
@@ -75,27 +78,23 @@ export default function Fundraising() {
             <Logo />
         </header>
         <h1 className="text-center font-signika text-success mt-5">What's happening?</h1>
-        {/* <Dropdown className="d-inline mt-5 ms-5 me-4 justify-content-center p-auto font-signika">
-            <Dropdown.Toggle id="dropdown-autoclose-true" variant="success" className="sign-out mt-5">{dropdownInput}</Dropdown.Toggle>
-            <Dropdown.Menu>
-                <Dropdown.Item 
-                    onChange={(e) => setDropdownInput(e.target.value)}
-                    value="ALL"
-                    active>ALL</Dropdown.Item>
-                <Dropdown.Item value="RECOMMENDATION" onChange={(e) => setDropdownInput(e.target.value)} active>RECOMMENDATION</Dropdown.Item>
-            </Dropdown.Menu>
-        </Dropdown> */}
-        <div className="mx-5 mt-5 mb-2 select-filter">
-            <select value={dropdownInput} onChange={(e) => handleChange(e)} name="class" class="form-select" required>
-                <option defaultValue value="ALL" >ALL</option>
-                <option value="TRENDING" onSelect={trendingPost}>TRENDING</option>
-            </select>
+        <div className="row">
+            <div className="col-md-12 col-lg-2 mx-5 mt-5 mb-2 select-filter">
+                <select value={dropdownInput} onChange={(e) => setDropdownInput(e.target.value)} name="class" className="form-select select-fundraising" required>
+                    <option defaultValue value="ALL" >ALL</option>
+                    <option value="TRENDING">TRENDING</option>
+                </select>
+            </div>
+            <div className="col-0 col-lg-6"></div>
+            <div className="ps-5 pe-1 mt-5 col-md-12 col-lg-4 contact-form">
+                <input name='search' type="text" className="form-control" id="validationDefault02" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder="Search" required/>
+            </div>
+            <button className="btn-search col-lg-auto mt-5 btn" onClick={handleSearch}><i class="fas fa-search    "></i></button>
         </div>
-        
         <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mx-5 mt-2 mb-5">
             {loading === false? 
                 <>
-                    {data?.donate_post_aggregate?.nodes.map((result) => (
+                    {dataList?.donate_post_aggregate?.nodes.map((result) => (
                         <div className="col">
                             <div className="card h-100 shadow">
                                 <img className="card-img-top img-head" src={result.IMAGE_URL === null? "noImage" : result.IMAGE_URL} alt="img" />

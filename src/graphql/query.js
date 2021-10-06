@@ -76,19 +76,38 @@ query MyQuery($ID_USER: Int!) {
 `
 
 const SearchDonatePost = gql`
-query MyQuery($_iregex: String!) {
-  donate_post(where: {Title: {_iregex: $_iregex}}) {
-    ID_POST
-    Title
-    Subtitle
-    Description
-    Donation_Total
-    Donation_Raised
-    IMAGE_URL
-    Donates
+query MyQuery($Title: String!) {
+  donate_post_aggregate(where: {Title: {_iregex: $Title}}) {
+    nodes {
+      ID_POST
+      Title
+      Subtitle
+      Donation_Total
+      Donation_Raised
+      IMAGE_URL
+      Donates
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
   }
 }
 `
+
+// query MyQuery($Title: String!) {
+//   donate_post(where: {Title: {_iregex: $Title}}) {
+//     ID_POST
+//     Title
+//     Subtitle
+//     Description
+//     Donation_Total
+//     Donation_Raised
+//     IMAGE_URL
+//     Donates
+//   }
+// }
 
 const OrderDonatePostByComments = gql`
 query MyQuery {

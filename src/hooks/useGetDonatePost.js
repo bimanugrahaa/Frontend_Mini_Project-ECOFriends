@@ -1,5 +1,5 @@
 import { useLazyQuery, useQuery } from "@apollo/client";
-import { GetDonatePost, GetDonatePostById, OrderDonatePostByComments } from "../graphql/query";
+import { GetDonatePost, GetDonatePostById, OrderDonatePostByComments, SearchDonatePost } from "../graphql/query";
 import { SubscriptionDonatePost } from "../graphql/subscribe";
 
 // function useGetDonatePost() {
@@ -36,7 +36,9 @@ function useGetDonatePostById(ID_POST) {
 }
 
 function useGetTrendingDonatePost() {
-    const [getTrending, {data: trendingData, loading: trendingLoading, error: trendingError}] = useLazyQuery(OrderDonatePostByComments)
+    const [getTrending, {data: trendingData, loading: trendingLoading, error: trendingError}] = useLazyQuery(OrderDonatePostByComments, {
+        variables:{}
+    })
 
     return {
         getTrending,
@@ -46,4 +48,18 @@ function useGetTrendingDonatePost() {
     }
 }
 
-export { useGetDonatePostById, useGetTrendingDonatePost }
+function useGetSearchDonatePost(Title) {
+    const [getSearch, {data: searchData, loading: searchLoading}] = useLazyQuery(SearchDonatePost, {
+        variables: {Title}
+    })
+
+    return {
+        getSearch,
+        searchData,
+        searchLoading
+    }
+    
+}
+
+
+export { useGetDonatePostById, useGetTrendingDonatePost, useGetSearchDonatePost }
