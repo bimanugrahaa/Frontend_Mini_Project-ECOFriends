@@ -16,7 +16,7 @@ function App() {
         <Route path="/donate" exact component={Donate}/>
         <Route path="/login" exact component={Login}/>
         <Route path="/fundraising" exact component={Fundraising}/>
-        <Route path="/detail/:id" exact component={Detail}/>
+        <Route path="/detail/:id/:title" exact component={Detail}/>
         <Route path="/signup" exact component={Signup}/>
         {/* <Route component={NotFound}/> */}
       </Switch>

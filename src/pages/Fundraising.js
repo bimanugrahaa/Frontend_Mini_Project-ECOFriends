@@ -1,43 +1,37 @@
-import { useHistory } from "react-router-dom"
-import { Dropdown, ProgressBar } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useGetSearchDonatePost, useGetTrendingDonatePost } from "../hooks/useGetDonatePost";
+import { ProgressBar } from "react-bootstrap";
 import NumberFormat from "react-number-format";
 import Loader from 'react-loader-spinner'
 import useSubscribeDonatePost from "../hooks/useSubscribeDonatePost";
 import Logo from '../components/Logo'
 import '../css/Fundraising.css'
-import DropdownItem from "@restart/ui/esm/DropdownItem";
-import { useEffect, useState } from "react";
-import { useGetSearchDonatePost, useGetTrendingDonatePost } from "../hooks/useGetDonatePost";
+import Header from "../components/Header";
+
 
 export default function Fundraising() {
 
-    /* Subscribe post */
+    const [dropdownInput, setDropdownInput] = useState('ALL')
+    const [dataList, getDataList] = useState([])
+    const [searchInput, setSearchInput] = useState()
+    const [searchState, setSearchState] = useState(false)
+
+    /* Get fetch donate post */
     const {data, loading, error} = useSubscribeDonatePost();
     const {getTrending, trendingData, trendingLoading, trendingError} = useGetTrendingDonatePost();
+    const {getSearch, searchData, searchLoading} = useGetSearchDonatePost(searchInput);
     
     
     const history = useHistory();
-    const action = (ID) => {
-        history.push(
-            {
-                pathname: `/detail/${ID}`,
-                state: {
-                    ID_POST: ID
-                }
-            }
-        )
+
+    /* Go to specific page */
+    const action = (ID, Title) => {
+        const urlTitle = Title.replace(/\s/g,"+")
+        history.push(`/detail/${ID}/${urlTitle}`)
     }
 
-    const [dropdownInput, setDropdownInput] = useState('ALL')
-
-
-    const [dataList, getDataList] = useState([])
-
-    const [searchInput, setSearchInput] = useState()
-    const [searchState, setSearchState] = useState(false)
-    const {getSearch, searchData, searchLoading} = useGetSearchDonatePost(searchInput);
-
-    console.log(searchInput)
+    /* Handle search button */
     const handleSearch = async() => {
         setSearchState(true)
         try {
@@ -48,8 +42,6 @@ export default function Fundraising() {
             console.log("search error", error)
         }
     }
-
-    
 
     useEffect(() => {
         if (searchState === false && dropdownInput === "ALL") {
@@ -69,14 +61,9 @@ export default function Fundraising() {
         }
     }, [dropdownInput, data, trendingData, searchData])
 
-    
-    
-
     return(
         <>
-        <header className="shadow-sm p-2">
-            <Logo />
-        </header>
+        <Header/>
         <h1 className="text-center font-signika text-success mt-5">What's happening?</h1>
         <div className="row">
             <div className="col-md-12 col-lg-2 mx-5 mt-5 mb-2 select-filter">
@@ -98,7 +85,7 @@ export default function Fundraising() {
                         <div className="col">
                             <div className="card h-100 shadow">
                                 <img className="card-img-top img-head" src={result.IMAGE_URL === null? "noImage" : result.IMAGE_URL} alt="img" />
-                                <div className="card-body" onClick={() => action(result.ID_POST)}>
+                                <div className="card-body post-cursor" onClick={() => action(result.ID_POST, result.Title)}>
                                     <h5 className="my-2 mx-auto text-uppercase">{result.Title}</h5>
                                 </div>
 

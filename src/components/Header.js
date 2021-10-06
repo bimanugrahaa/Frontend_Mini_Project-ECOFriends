@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { auth } from "../firebase";
 import { signOutUser } from "../auth/authUser";
 import { useState } from "react";
@@ -11,6 +11,8 @@ export default function Header() {
     const [getUserActive, setUser] = useState(null)             //Get user if any user active
     const [getDisplayName, setDisplayName] = useState("")       //Get user display name from auth state
 
+    const history = useHistory();
+    
     /* Auth check if any user active from auth */
     auth.onAuthStateChanged((user) => {
         setUser(user)
@@ -24,7 +26,7 @@ export default function Header() {
 
     return (
         <>
-        <header className="navbar fixed-top d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 shadow-sm">
+        <header className="navbar d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-2 shadow-sm">
             <header className="ps-2">
                 <Logo />
             </header>
@@ -43,8 +45,8 @@ export default function Header() {
                             <Dropdown.Item 
                                 onClick={() => {
                                     setTimeout(() => {
-                                        signOutUser()
-                                        window.location.reload()
+                                        signOutUser()                                  
+                                        history.push('/')
                                     }, 1000);
                                 }}>Sign Out</Dropdown.Item>
                         </Dropdown.Menu>

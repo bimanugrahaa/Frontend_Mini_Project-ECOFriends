@@ -17,6 +17,7 @@ import ModalPrivate from "../components/ModalPrivate";
 import Logo from '../components/Logo'
 import tree from '../assets/tree.png'
 import Loader from "react-loader-spinner";
+import Header from "../components/Header";
 
 export default function Detail(props) {
 
@@ -29,12 +30,15 @@ export default function Detail(props) {
         }
       })
 
-    const urlNow = props.location.pathname
+    // const urlNow = props.location.pathname
+    const urlNow = window.location.pathname
     const uriSplit = urlNow.split('/')
     console.log(uriSplit[2])
+    console.log(window.location.pathname)
 
     console.log("props", props)
-    const ID = props.location.state.ID_POST
+    // const ID = props.location.state.ID_POST
+    const ID = uriSplit[2]
     // const ID_USER = 2;
     console.log("ID_POST", ID)
 
@@ -59,7 +63,7 @@ export default function Detail(props) {
     console.log('commentsData out', commentsData)
     const history = useHistory();
     const goBack = () => {
-        history.goBack()
+        history.replace('/fundraising')
     }
     const action = (ID) => {
         console.log("getInAction")
@@ -184,9 +188,10 @@ export default function Detail(props) {
 
     return(
         <>
-        <header className="shadow-sm p-2">
+        {/* <header className="shadow-sm p-2">
             <Logo />
-        </header>
+        </header> */}
+        <Header/>
         {detailLoading || commentsLoading || infoLoading === true?
         <div className="my-5 align-middle">
             <Loader className="text-center mx-auto" type="TailSpin" color="#528A62" height={80} width={80}/>
@@ -229,7 +234,17 @@ export default function Detail(props) {
                     displayType="text"
                     type="tel"
                     thousandSeparator={true}
-                    allowNegative={false} /> Raised of Goal Rp{info?.Donation_Total}</p>
+                    allowNegative={false} /> Raised of Goal 
+                    <NumberFormat
+                    className=" font-signika"
+                    thousandsGroupStyle="thousand"
+                    value={info?.Donation_Total}
+                    prefix=" Rp"
+                    decimalSeparator=""
+                    displayType="text"
+                    type="tel"
+                    thousandSeparator={true}
+                    allowNegative={false} /></p>
                 {/* <p>of Goal Rp{info?.Donation_Total}</p> */}
                 </div>
                 <div className="text-center">
