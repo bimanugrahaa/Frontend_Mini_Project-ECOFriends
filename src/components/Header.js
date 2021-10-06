@@ -7,7 +7,6 @@ import Logo from "./Logo";
 import '../css/Header.css'
 
 export default function Header() {
-
     const [getUserActive, setUser] = useState(null)             //Get user if any user active
     const [getDisplayName, setDisplayName] = useState("")       //Get user display name from auth state
 
@@ -16,7 +15,6 @@ export default function Header() {
     /* Auth check if any user active from auth */
     auth.onAuthStateChanged((user) => {
         setUser(user)
-        console.log("user", user)
         if (user === null) {
             setDisplayName("Guests")
         } else {
@@ -31,7 +29,7 @@ export default function Header() {
                 <Logo />
             </header>
             <ul className="nav nav-pills">
-                <button href="/about-us" className="me-4 about-us font-roboto btn">About us</button>
+                <NavLink to="/about-us"><button className="me-4 about-us font-roboto btn">About us</button></NavLink>
                 {getUserActive === null? 
                 <>
                     <NavLink to="/login" type="button" className="me-4 font-roboto sign-in btn">Sign In</NavLink>

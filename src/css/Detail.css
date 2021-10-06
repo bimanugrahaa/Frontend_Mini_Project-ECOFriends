@@ -34,10 +34,9 @@
 }
 
 .detail-post{
-    /* margin-left: 220px; */
     width: 600px;
-    /* height: 325px; */
 }
+
 .detail-img {
     border-radius: 10px;
     width: 580px;
@@ -48,16 +47,16 @@
     height: min-content;
     margin-left: 128px;
     background: rgba( 255, 255, 255, 0.35 );
-/* box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 ); */
-/* backdrop-filter: blur( 5px );
--webkit-backdrop-filter: blur( 5px );
-border-radius: 10px;
-border: 1px solid rgba(8, 100, 0, 0.4); */
-backdrop-filter: blur(16px) saturate(180%);
--webkit-backdrop-filter: blur(16px) saturate(180%);
-background-color: rgba(240, 240, 240, 0.75);
-border-radius: 12px;
-border: 1px solid rgba(8, 100, 0, 0.4);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(240, 240, 240, 0.75);
+    border-radius: 12px;
+    border: 1px solid rgba(8, 100, 0, 0.4);
+}
+
+.donation-raised{
+    color: #54775E;
+    font-size: 20px;
 }
 
 .tree {
@@ -71,22 +70,22 @@ border: 1px solid rgba(8, 100, 0, 0.4);
     width: 200px;
 }
 
-.donation-raised{
-    color: #54775E;
-    font-size: 20px;
-}
-
-.text-raised{
-    /* margin-top: 48px; */
+.btn-post-comment{
+    width: 140px;
+    height: 40px;
+    background-color: #017201b2;
+    color: white;
 }
 
 .text-support{
     font-size: 24px;
-    /* margin-left: 250px; */
+}
+
+.text-muted{
+    font-size: 14px;
 }
 
 .form-comment{
-    /* margin-left: 250px; */
     width: 500px;
     height: 200px;
 }
@@ -96,36 +95,10 @@ border: 1px solid rgba(8, 100, 0, 0.4);
     height: 50px;
 }
 
-.btn-post-comment{
-    width: 140px;
-    /* float: right; */
-    /* position:inherit; */
-    height: 40px;
-    /* margin-left: 250px; */
-    background-color: #AA8976;
-    color: white;
-}
-
 .card-comment {
-    /* border-bottom: 1px solid gray; */
     margin: 0px 0px 10px 0px;
     padding-bottom: 10px;
     padding-top: 10px;
-}
-
-.empty-comment{
-    /* border-bottom: 1px solid gray; */
-    margin: 0px 0px 10px 0px;
-    padding-right: 50px;
-    /* width: 20px; */
-}
-
-.bg-gray{
-    background-color: rgba(180, 180, 180, 0.5);
-}
-
-.text-muted{
-    font-size: 14px;
 }
 
 .card-comment-nologin{
@@ -133,9 +106,17 @@ border: 1px solid rgba(8, 100, 0, 0.4);
     height: 100px;
 }
 
+.empty-comment{
+    margin: 0px 0px 10px 0px;
+    padding-right: 50px;
+}
+
+.bg-gray{
+    background-color: rgba(180, 180, 180, 0.5);
+}
+
 .bg-comment{
     backdrop-filter: blur(16px) saturate(180%);
--webkit-backdrop-filter: blur(16px) saturate(180%);
-background-color: rgba(240, 240, 240, 0.75);
-/* border: 1px solid rgba(8, 100, 0, 0.4); */
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    background-color: rgba(240, 240, 240, 0.75);
 }

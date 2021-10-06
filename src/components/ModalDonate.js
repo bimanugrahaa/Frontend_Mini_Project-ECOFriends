@@ -40,7 +40,6 @@ export default function ModalDonate(props) {
         getDisplayName(user.displayName)
     })
 
-
     return (
         <>
         <Modal {...props} aria-labelledby="contained-modal-title-vcenter" centered contentClassName="border-0" >

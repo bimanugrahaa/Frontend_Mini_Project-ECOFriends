@@ -14,15 +14,10 @@ import useUpdateComment from "../hooks/useUpdateComment";
 import Header from "../components/Header";
 import ModalPrivate from "../components/ModalPrivate";
 import tree from '../assets/tree.png'
-import './Detail.css'
+import '../css/Detail.css'
 
 export default function Detail() {
 
-    //Loading comment
-    //Alert delete comment
-    //Private route
-    //Not found
-    //About us
     const history = useHistory();
 
     /* Get active user */
@@ -39,6 +34,7 @@ export default function Detail() {
     const urlNow = window.location.pathname
     const uriSplit = urlNow.split('/')
     const ID = uriSplit[2]
+    const Title = uriSplit[3]
 
     /* Get data from hasura */
     const {detailData, detailLoading, detailError} = useGetDonatePostById(ID);
@@ -64,16 +60,15 @@ export default function Detail() {
     const [show, setShow] = useState(false);
     
     /* Handle donate button */
-    const action = (ID) => {
+    const action = (ID, Title) => {
         if (ID_USER !== '0') {
             history.push(
                 {
-                    pathname: `/donate`,
+                    pathname: `/detail/${ID}/${Title}/donate`,
                     state: {
                         ID_POST: ID,
                         Donation_Raised: info?.Donation_Raised
                     }
-                    
                 }
             )
         } else {
@@ -172,7 +167,6 @@ export default function Detail() {
         fetchInfo();
     })
 
-
     return(
         <>
         <Header/>
@@ -230,7 +224,7 @@ export default function Detail() {
                         </p>
                     </div>
                     <div className="text-center">
-                        <button onClick={() => action(ID)} className="btn btn-donate-now mx-auto my-4">Donate Now</button>
+                        <button onClick={() => action(ID, Title)} className="btn btn-donate-now mx-auto my-4">Donate Now</button>
                     </div>
                 </div>
             </div>
@@ -248,42 +242,48 @@ export default function Detail() {
                     </div>
                 }
                 <div className="row  mt-4 mx-auto">
-                {commentsData?.comments.length === 0 ?
-                    <h5 className="text-center my-5"> No comments </h5> 
-                :
-                    commentsData?.comments.map((comment) => (
-                        <div className="row justify-content-center">
-                            <div className="col-md-auto align-middle card-comment bg-comment bg-gradient rounded-start">
-                                <Avatar name={comment.user.name} size={50} round={true}/>
-                            </div>
-                            <div className="col-md-4 card-comment bg-comment bg-gradient ">
-                                <p className="mb-0 fs-6">{comment.user.name}
-                                {comment.isEdited?
-                                    <span className="text-muted"> (Edited) </span>
-                                :
-                                    <span></span>
-                                }
-                                </p>
-                                <span className="text-muted">{comment.Date}</span>
-                                {getEdit.ID_COMMENT === comment.ID_COMMENT && getEdit.editState === true? 
-                                    <div>
-                                        <textarea name='commentPost' type="text" className="form-control form-comment-edit font-signika mt-2" placeholder="Say something nice here" id="validationDefault02" onChange={onChangeEdit} value={getEdit.Comment_post} required/>
-                                        <button onClick={handleSubmitEdit} className="btn btn-post-comment mt-1">Edit comment</button>
+                    {loadingInsertComment || loadingDeleteComment || loadingUpdateComment === true? 
+                        <Loader className="text-center mx-auto" type="TailSpin" color="#528A62" height={80} width={80}/>
+                    :
+                        <>
+                        {commentsData?.comments.length === 0 ?
+                            <h5 className="text-center my-5"> No comments </h5> 
+                        :
+                            commentsData?.comments.map((comment) => (
+                                <div className="row justify-content-center">
+                                    <div className="col-md-auto align-middle card-comment bg-comment bg-gradient rounded-start">
+                                        <Avatar name={comment.user.name} size={50} round={true}/>
                                     </div>
-                                :
-                                    <p className="mt-2">{comment.Comment_post}</p>
-                                }
-                            </div>
-                            {comment.ID_USER === ID_USER ? 
-                                <div className="col-md-auto card-comment bg-comment bg-gradient rounded-end">
-                                    <i onClick={() => handleEdit(comment.ID_COMMENT, comment.Comment_post)} class="fas fa-edit me-2"></i>
-                                    <i onClick={() => deleteCommentByPk(comment.ID_COMMENT)} class="fas fa-trash-alt"></i>
-                                </div>   
-                                :
-                                <div className="col-md-auto empty-comment bg-comment bg-gradient rounded-end"></div> 
-                            }                
-                        </div>
-                    ))}
+                                    <div className="col-md-4 card-comment bg-comment bg-gradient ">
+                                        <p className="mb-0 fs-6">{comment.user.name}
+                                        {comment.isEdited?
+                                            <span className="text-muted"> (Edited) </span>
+                                        :
+                                            <span></span>
+                                        }
+                                        </p>
+                                        <span className="text-muted">{comment.Date}</span>
+                                        {getEdit.ID_COMMENT === comment.ID_COMMENT && getEdit.editState === true? 
+                                            <div>
+                                                <textarea name='commentPost' type="text" className="form-control form-comment-edit font-signika mt-2" placeholder="Say something nice here" id="validationDefault02" onChange={onChangeEdit} value={getEdit.Comment_post} required/>
+                                                <button onClick={handleSubmitEdit} className="btn btn-post-comment mt-1">Edit comment</button>
+                                            </div>
+                                        :
+                                            <p className="mt-2">{comment.Comment_post}</p>
+                                        }
+                                    </div>
+                                    {comment.ID_USER === ID_USER ? 
+                                        <div className="col-md-auto card-comment bg-comment bg-gradient rounded-end">
+                                            <i onClick={() => handleEdit(comment.ID_COMMENT, comment.Comment_post)} class="fas fa-edit me-2"></i>
+                                            <i onClick={() => deleteCommentByPk(comment.ID_COMMENT)} class="fas fa-trash-alt"></i>
+                                        </div>   
+                                        :
+                                        <div className="col-md-auto empty-comment bg-comment bg-gradient rounded-end"></div> 
+                                    }                
+                                </div>
+                            ))}
+                        </>
+                    }
                 </div>
             </div>
             <ModalPrivate show={show} />

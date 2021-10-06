@@ -38,7 +38,6 @@ export default function Donate(props) {
             setShow(true)
             setUpdatedDonation(Donation_Raised+parseInt(getDonationInput))
         }
-        
     }
 
     return (

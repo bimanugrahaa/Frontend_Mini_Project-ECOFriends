@@ -5,13 +5,12 @@ import { ProgressBar } from "react-bootstrap";
 import NumberFormat from "react-number-format";
 import Loader from 'react-loader-spinner'
 import useSubscribeDonatePost from "../hooks/useSubscribeDonatePost";
-import Logo from '../components/Logo'
 import '../css/Fundraising.css'
 import Header from "../components/Header";
 
 
 export default function Fundraising() {
-
+    /* useState */
     const [dropdownInput, setDropdownInput] = useState('ALL')
     const [dataList, getDataList] = useState([])
     const [searchInput, setSearchInput] = useState()
@@ -22,12 +21,11 @@ export default function Fundraising() {
     const {getTrending, trendingData, trendingLoading, trendingError} = useGetTrendingDonatePost();
     const {getSearch, searchData, searchLoading} = useGetSearchDonatePost(searchInput);
     
-    
     const history = useHistory();
 
     /* Go to specific page */
     const action = (ID, Title) => {
-        const urlTitle = Title.replace(/\s/g,"+")
+        const urlTitle = Title.replace(/\s/g,"-")
         history.push(`/detail/${ID}/${urlTitle}`)
     }
 
@@ -45,19 +43,15 @@ export default function Fundraising() {
 
     useEffect(() => {
         if (searchState === false && dropdownInput === "ALL") {
-            
             getDataList(data)
-            console.log("ALL", dataList)
         }
         if (searchState === false && dropdownInput === "TRENDING") {
             getTrending()
             getDataList(trendingData)
-            console.log("TRENDING", dataList)
         }
         if (searchState) {
             getSearch(searchInput)
             getDataList(searchData)
-            console.log("search", dataList)
         }
     }, [dropdownInput, data, trendingData, searchData])
 

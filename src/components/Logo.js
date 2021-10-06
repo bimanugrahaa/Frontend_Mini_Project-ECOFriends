@@ -1,7 +1,6 @@
 import { useHistory } from "react-router-dom";
 import logo from '../assets/Logo-MiniProject.png';
 
-
 export default function Logo(props){
 
     /* Move to another page */
@@ -21,7 +20,6 @@ export default function Logo(props){
                 <img src={logo} width="200px" className="donate-cursor" onClick={goHome} alt="logo"/>
             </div>
         }
-        </>
-        
+        </>   
     )
 }
