@@ -20,8 +20,8 @@
 }
 
 .sign-in{
-    background-color: #54775E;
-    color: white;
+    background-color: white;
+    /* color: white; */
     font-size: 18px;
     border-radius: 10px;
 }
@@ -30,4 +30,17 @@
     background-color: white;
     font-size: 18px;
     border-radius: 10px;
+}
+
+.sign-up{
+    background-color: #54775E;
+    color: white;
+    font-size: 18px;
+    border-radius: 10px;
+}
+
+/* Header sign out */
+.sign-out{
+    background: transparent;
+    color: black;
 }

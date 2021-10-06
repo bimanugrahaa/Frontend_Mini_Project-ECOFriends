@@ -1,45 +1,60 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url(https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap);
 
+/* font */
 .font-signika {
     font-family: Signika;
 }
 
-.back-cursor {
+.font-fira-sans {
+    font-family: 'Fira Sans';
+}
+
+/* donate */
+.donate-cursor {
     cursor: pointer;
 }
 
 .donate-background{
-    /* background-image:linear-gradient(rgba(255, 255, 255, 0.65), rgba(177, 177, 177, 0.062)), url(../assets/Login-background.png); */
     background-image:linear-gradient(rgba(184, 184, 184, 0.65), rgba(151, 151, 151, 0.062)), url(../assets/Donate-background.png);
     width: 100%;
-    height: 1000px;
-    /* filter: blur(2px); */
-    /* margin-top: 80px; */   
+    height: 1007px; 
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
 
+.donate-quotes{
+    font-weight: 600;
+    font-size: 56px;
+    margin: 0px 150px;
+    color: white;
+}
+
 .card-donate{
-    height: 1000px;
+    height: 1007px;
+}
+
+/* button */
+.back-button{
+    width: 20px;
 }
 
 .fa-chevron-left{
     color: #54775E;
 }
 
-.nominal-text-first{
-    margin-top: 200px;
-    font-weight: 500;
-    font-size: 18px;
-}
-
 .btn-nominal{
-    background-color: #64BE7E;
+    background-color: white;
+    outline: 1px solid #64BE7E;;
     width: 326px;
     height: 50px;
     font-weight: 400;
     font-size: 24px;
+}
+
+.btn-nominal:hover{
+    background-color: #64BE7E;
 }
 
 .btn-donate{
@@ -51,37 +66,33 @@
     border-radius: 10px;
 }
 
+/* form */
 .form-nominal{
     width: 326px;
     height: 60px;
-    /* background-color: rgba(212, 212, 212, 0.8); */
-}
-
-.text-rp{
-    font-size: 24px;
 }
 
 .input-nominal{
     width: 200px;
     height: 40px;
-    /* background-color: rgba(212, 212, 212, 0); */
     border: 0px;
-    font-size: 20px;
+    font-size: 24px;
 }
 
 .input-nominal:focus{
     outline: none;
 }
 
-.donate-quotes{
-    font-weight: 600;
-    font-size: 56px;
-    margin: 0px 150px;
-    font-variant: small-caps;
-    /* color: white; */
-    /* color: white;
-    stroke: #54775E;
-    stroke-width: 100px;
-    -webkit-text-stroke: 1px #54775E; */
-
+/* text */
+.nominal-text-first{
+    margin-top: 180px;
+    font-weight: 500;
+    font-size: 18px;
 }
+
+.text-rp{
+    font-size: 24px;
+}
+
+
+

@@ -3,31 +3,29 @@ import ReactDOM from 'react-dom';
 import {
   ApolloClient,
   InMemoryCache,
-  ApolloProvider,
-  useQuery,
-  gql
+  ApolloProvider
 } from "@apollo/client";
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { split, HttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
-import './index.css';
+import './css/index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const httpLink = new HttpLink({
-  uri: 'https://mini-project-ecofriends.hasura.app/v1/graphql',
+  uri: 'https://mini-project-frontend-ecofriends.hasura.app/v1/graphql',
     headers: {
-      'x-hasura-admin-secret':'dIhyuUtYhu8gwK31CGzC1sGZ8FU6wkz2PLX3vKR3lS7RQ8tNDSeEMlLVJqojo6e5'
+      'x-hasura-admin-secret':'p7D7GcHdxpokU4E3lm7cfJUEzi4H2Bt8GAf2NotD95Sg5O7ApwXq66PcBTGuvFua'
   }
 });
 
 const wsLink = new WebSocketLink({
-  uri: 'wss://mini-project-ecofriends.hasura.app/v1/graphql',
+  uri: 'wss://mini-project-frontend-ecofriends.hasura.app/v1/graphql',
   options: {
     reconnect: true,
     connectionParams: {
       headers: {
-        'x-hasura-admin-secret':'dIhyuUtYhu8gwK31CGzC1sGZ8FU6wkz2PLX3vKR3lS7RQ8tNDSeEMlLVJqojo6e5'
+        'x-hasura-admin-secret':'p7D7GcHdxpokU4E3lm7cfJUEzi4H2Bt8GAf2NotD95Sg5O7ApwXq66PcBTGuvFua'
     }
     }
   }

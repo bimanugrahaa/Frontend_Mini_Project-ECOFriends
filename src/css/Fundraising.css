@@ -1,0 +1,30 @@
+.fundraising-raised{
+    font-size: 16px;
+    font-weight: 500;
+    color: #528A62;
+}
+
+.img-head{
+    width: 100%;
+    height: 250px;
+}
+
+.select-filter{
+    width: 150px;
+}
+
+.select-fundraising{
+    border-color: #528A62;
+}
+
+.col-right{
+    margin-left: 100%;
+}
+
+.btn-search{
+    height: 40px;
+}
+
+.post-cursor {
+    cursor: pointer;
+}

@@ -22,24 +22,46 @@ mutation MyMutation($ID_COMMENT: Int!) {
 `
 
 const UpdateComment = gql`
-mutation MyMutation($ID_COMMENT: Int!, $Comment_post: String!) {
-    update_comments_by_pk(pk_columns: {ID_COMMENT: $ID_COMMENT}, _set: {Comment_post: $Comment_post}) {
+mutation MyMutation($ID_COMMENT: Int!, $Comment_post: String!, $isEdited: Boolean!) {
+    update_comments_by_pk(pk_columns: {ID_COMMENT: $ID_COMMENT}, _set: {Comment_post: $Comment_post, isEdited: $isEdited}) {
       ID_POST
       ID_COMMENT
       ID_USER
       Comment_post
+      isEdited
     }
   }
 `
+
+// const UpdateInfoDonate = gql`
+// mutation MyMutation($ID_POST: Int!, $Donation_Raised: numeric!) {
+//     update_donate_post_by_pk(pk_columns: {ID_POST: $ID_POST}, _set: {Donation_Raised: $Donation_Raised}) {
+//       ID_POST
+//       Donation_Total
+//       Donation_Raised
+//     }
+//   }
+// `
 
 const UpdateInfoDonate = gql`
-mutation MyMutation($ID_POST: Int!, $Donation_Raised: Int!) {
-    update_donate_post_by_pk(pk_columns: {ID_POST: $ID_POST}, _set: {Donation_Raised: $Donation_Raised}) {
-      ID_POST
-      Donation_Total
-      Donation_Raised
-    }
+mutation MyMutation($ID_POST: Int!, $Donation_Raised: numeric!) {
+  update_donate_post_by_pk(pk_columns: {ID_POST: $ID_POST}, _inc: {Donates: 1}, _set: {Donation_Raised: $Donation_Raised}) {
+    ID_POST
+    Donation_Total
+    Donation_Raised
+    Donates
   }
+}
 `
 
-export { InsertComment, DeleteComment, UpdateComment, UpdateInfoDonate }
+const InsertUser = gql`
+mutation MyMutation($ID_USER: String!, $email: String!, $name: String!) {
+  insert_user_one(object: {ID_USER: $ID_USER, email: $email, name: $name}) {
+    ID_USER
+    email
+    name
+  }
+}
+`
+
+export { InsertComment, DeleteComment, UpdateComment, UpdateInfoDonate, InsertUser }

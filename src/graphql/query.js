@@ -10,6 +10,7 @@ query MyQuery {
       Donation_Total
       Donation_Raised
       IMAGE_URL
+      Donates
     }
   }
 `
@@ -24,6 +25,7 @@ query MyQuery($ID_POST: Int!) {
       Donation_Total
       Donation_Raised
       IMAGE_URL
+      Donates
     }
   }
 `
@@ -44,21 +46,23 @@ query MyQuery($ID_USER: Int!) {
     user(where: {ID_USER: {_eq: $ID_USER}}) {
       ID_USER
       name
-      username
+      email
     }
   }
 `
+// username => email
 
 const GetAllUser = gql`
 query MyQuery {
     user {
       ID_USER
       name
-      username
-      pass
+      email
     }
   }  
 `
+// username
+// pass
 
 const GetUserById = gql`
 query MyQuery($ID_USER: Int!) {
@@ -71,4 +75,59 @@ query MyQuery($ID_USER: Int!) {
 }
 `
 
-export { GetDonatePost, GetDonatePostById, GetCommentPost, GetUserComment, GetAllUser, GetUserById }
+const SearchDonatePost = gql`
+query MyQuery($Title: String!) {
+  donate_post_aggregate(where: {Title: {_iregex: $Title}}) {
+    nodes {
+      ID_POST
+      Title
+      Subtitle
+      Donation_Total
+      Donation_Raised
+      IMAGE_URL
+      Donates
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+}
+`
+
+// query MyQuery($Title: String!) {
+//   donate_post(where: {Title: {_iregex: $Title}}) {
+//     ID_POST
+//     Title
+//     Subtitle
+//     Description
+//     Donation_Total
+//     Donation_Raised
+//     IMAGE_URL
+//     Donates
+//   }
+// }
+
+const OrderDonatePostByComments = gql`
+query MyQuery {
+  donate_post_aggregate(limit: 10, order_by: {comments_aggregate: {count: desc_nulls_last}, Donates: desc}) {
+    nodes {
+      ID_POST
+      Title
+      Subtitle
+      Donation_Total
+      Donation_Raised
+      IMAGE_URL
+      Donates
+      comments_aggregate {
+        aggregate {
+          count
+        }
+      }
+    }
+  }
+}
+`
+
+export { GetDonatePost, GetDonatePostById, GetCommentPost, GetUserComment, GetAllUser, GetUserById, SearchDonatePost, OrderDonatePostByComments }

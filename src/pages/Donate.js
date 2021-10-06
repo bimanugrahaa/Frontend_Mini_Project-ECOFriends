@@ -1,98 +1,76 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import HeaderLogo from '../components/HeaderLogo'
 import ModalDonate from "../components/ModalDonate";
-import './Donate.css'
+import Logo from '../components/Logo'
+import '../css/Donate.css';
+
 
 export default function Donate(props) {
+    /* Getting props from previous page */
+    const ID = props.location.state.ID_POST
+    const Donation_Raised = props.location.state.Donation_Raised
+
+    /* Move to another page */
     const history = useHistory();
-    const goHome = () => {
+    const goBack = () => {
         history.goBack()
     }
 
-    
-
-    const ID = props.location.state.ID_POST
-    const Donation_Raised = props.location.state.Donation_Raised
-    console.log("ID_POST_DONATE", ID)
-    console.log("Donation_Raised", Donation_Raised)
-
+    /* useState */
+    const [getDonationInput, setDonationInput] = useState(0)
     const [updateDonation, setUpdatedDonation] = useState(Donation_Raised)
-
     const [show, setShow] = useState(false);
+    const [err, setErr] = useState("")
 
+    /* Handling input and submit */
     const handleClose = () => setShow(false);
     const handleShow = (e) => {
         setShow(true)
-        const donation = e.target.value
-        setUpdatedDonation(Donation_Raised+parseInt(donation))
-        console.log("donation", parseInt(donation))
+        setDonationInput(e.target.value)
+        setUpdatedDonation(Donation_Raised+parseInt(e.target.value))
     };
-    // var myModal = document.getElementById('exampleModalCenter')
-    // var myInput = document.getElementById('myInput')
 
-    // if (myModal) {
-    //     myModal.addEventListener('shown.bs.modal', function () {
-    //         myInput.focus()
-    //         })
-    // }
-    
+    const handleShowNominal = (e) => {
+        if (getDonationInput < 1000) {
+            setErr("Sorry minimum donation amount is Rp 1000")
+        } else {
+            setErr("")
+            setShow(true)
+            setUpdatedDonation(Donation_Raised+parseInt(getDonationInput))
+        }
+    }
 
     return (
-        <div className="jumbotron donate-background ">
-            
+        <div className="container-fluid donate-background">
             <div className="row">
                 <div className="col-md-5 my-auto">
-                    <p className="donate-quotes font-signika">“No matter how much you donate,
+                    <p className="donate-quotes font-fira-sans">“No matter how much you donate,
                         it will mean a lot to our environment.”</p>
-
                 </div>
                 <div className="col-md-7 mx-0 my-0 card-donate card">
                     <div className="row">
-                        <div className="col-md-1 my-auto">
-                            <i onClick={goHome} className="fa fa-chevron-left fa-2x back-cursor" aria-hidden="true"></i>
+                        <div className="col-md-1 my-auto back-button">
+                            <i onClick={goBack} className="fa fa-chevron-left fa-2x donate-cursor" aria-hidden="true"></i>
                         </div>
-                        <div className="col-md-11 mx-auto">
-                            <HeaderLogo/>
-                        </div>
+                        <Logo className="col-md-11 text-center"/>
                     </div>
                     <p className="nominal-text-first font-signika mx-auto">Choose one below</p>
-                    {/* <button value={5000} className="btn btn-nominal mt-2 mx-auto font-signika" data-bs-toggle="modal" data-bs-target="#verticallyCentered">Rp 5000</button> */}
                     <button type="button" value={5000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 5000</button>
                     <button type="button" value={10000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 10000</button>
                     <button type="button" value={20000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 20000</button>
                     <button type="button" value={50000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 50000</button>
-                    <button type="button" value={100000} className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 100000</button>
+                    <button type="button" value="100000" className="btn btn-nominal mt-3 mx-auto font-signika" onClick={handleShow}>Rp 100000</button>
                     <h6 className="font-signika mx-auto my-2">OR</h6>
                     <h5 className="font-signika my-1 mx-auto">Another nominal</h5>
                     <div className="form-nominal form-control mx-auto">
                         <span className="font-signika text-rp">Rp</span>
-                        <input name='nominal' type="tel" className="ms-2 input-nominal font-signika" placeholder="0" id="validationDefault02" required/>
+                        <input name='nominal' type="tel" className="ms-2 input-nominal font-signika" placeholder="0" id="validationDefault02" value={getDonationInput} onChange={(e) => setDonationInput(e.target.value)} required/>
                     </div>
-                    <button className="btn btn-donate mt-3 mx-auto font-signika">DONATE</button>
-                </div>
-
-            </div>
-            <div class="modal fade" id="exampleModalCenter" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>This is a vertically centered modal.</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                    </div>
+                    <h6 className="text-danger text-center">{err}</h6>
+                    <button className="btn btn-donate mt-3 mx-auto font-signika" onClick={handleShowNominal}>DONATE</button>
                 </div>
             </div>
-
-            <ModalDonate id_post={ID} update_donation={updateDonation} show={show} onHide={handleClose}/>
+            <ModalDonate getDonationInput={getDonationInput} id_post={ID} update_donation={updateDonation} show={show} onHide={handleClose}/>
         </div>
     )
 }
