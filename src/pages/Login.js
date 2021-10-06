@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
 import { Toast, ToastContainer } from 'react-bootstrap';
-import { auth } from '../firebase'
+import { auth } from '../auth/firebase'
 import Loader from 'react-loader-spinner';
 import Logo from '../components/Logo';
 import '../css/Account.css'

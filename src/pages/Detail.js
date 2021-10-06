@@ -4,7 +4,7 @@ import { ProgressBar } from "react-bootstrap";
 import Loader from "react-loader-spinner";
 import Avatar from 'react-avatar';
 import NumberFormat from "react-number-format";
-import { auth } from "../firebase"; 
+import { auth } from "../auth/firebase"; 
 import { useGetDonatePostById } from "../hooks/useGetDonatePost";
 import useSubscribeComments from "../hooks/useSubscribeComments";
 import useInsertComment from "../hooks/useInsertComment";
@@ -43,6 +43,7 @@ export default function Detail() {
     const [detail, getDetail] = useState([])
     const [comments, getComments] = useState([])
     const [info, getInfo] = useState([])
+    const [getDescription, setDescription] = useState("")
 
     /* Handle comment */
     const {insertComment, loadingInsertComment} = useInsertComment();
@@ -80,9 +81,11 @@ export default function Detail() {
     const fetchDetail = async() => {
         try{
             await getDetail(detailData?.donate_post[0])
+            await setDescription(detailData?.donate_post[0]?.Description)
         } catch (error) {
             console.log("error fetch detail", error)
         }
+        
     }
 
     /* Get comments */
@@ -98,7 +101,6 @@ export default function Detail() {
     const fetchInfo = async() => {
         try{
             await getInfo(infoData?.donate_post[0])
-            console.log("infoData", info)
         } catch (error) {
             console.log("error fetch info", error)
         }
@@ -167,6 +169,9 @@ export default function Detail() {
         fetchInfo();
     })
 
+    /* Get description paragraph */
+    const setPostDescription = getDescription?.split('/n')
+
     return(
         <>
         <Header/>
@@ -184,7 +189,10 @@ export default function Detail() {
                 <div className="col-md-10 detail-post font-signika">
                     <img className="detail-img shadow-lg" src={detail?.IMAGE_URL} alt="Post img"/>
                     <p className="detail-subtitle">{detail?.Subtitle}</p>
-                    <p className="detail-description">{detail?.Description}</p>
+                    {setPostDescription?.map((description) => {
+                        return <p className="detail-description">{description}</p>
+                    })}
+                    {/* <p className="detail-description">{detail?.Description}</p> */}
                 </div>
                 <div className="col-md-2 detail-info">
                     <h4 className="text-center font-signika text-uppercase mt-2">Info</h4>

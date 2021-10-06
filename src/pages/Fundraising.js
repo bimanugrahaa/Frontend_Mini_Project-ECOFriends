@@ -60,19 +60,18 @@ export default function Fundraising() {
         <Header/>
         <h1 className="text-center font-signika text-success mt-5">What's happening?</h1>
         <div className="row">
-            <div className="col-md-12 col-lg-2 mx-5 mt-5 mb-2 select-filter">
+            <div className="col-12 col-sm-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 mx-5 mt-5 mb-2 select-filter">
                 <select value={dropdownInput} onChange={(e) => setDropdownInput(e.target.value)} name="class" className="form-select select-fundraising" required>
                     <option defaultValue value="ALL" >ALL</option>
                     <option value="TRENDING">TRENDING</option>
                 </select>
             </div>
-            <div className="col-0 col-lg-6"></div>
-            <div className="ps-5 pe-1 mt-5 col-md-12 col-lg-4 contact-form">
+            <div className="ps-5 pe-1 mt-5 col-5 col-sm-5 col-md-6 col-lg-8 col-xl-8 col-xxl-9 contact-form">
                 <input name='search' type="text" className="form-control" id="validationDefault02" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} placeholder="Search" required/>
             </div>
-            <button className="btn-search col-lg-auto mt-5 btn" onClick={handleSearch}><i class="fas fa-search    "></i></button>
+            <button className="btn-search col-auto mt-5 me-5 btn" onClick={handleSearch}><i class="fas fa-search    "></i></button>
         </div>
-        <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4 mx-5 mt-2 mb-5">
+        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mx-5 mt-2 mb-5">
             {loading === false? 
                 <>
                     {dataList?.donate_post_aggregate?.nodes.map((result) => (
