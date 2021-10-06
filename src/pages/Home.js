@@ -10,15 +10,15 @@ export default function Home() {
         <Header/>
         <div className="container-fluid mt-5">
             <div className="row">
-                <div className="col-md-2"></div>
-                <div className="col-md-4 font-signika text">
+                <div className="col-2 col-md-2 col-xl-2"></div>
+                <div className="col-10 col-md-4 col-xl-4 font-signika text">
                     <h4 className="text-1">Little act for</h4>
                     <h1 className="text-2">BIG</h1>
                     <h1 className="text-2">CHANGES</h1>
                     <h5 className="text-3">With ECOFriends, we take care the nature for the world</h5>
                     <NavLink to="/fundraising" type="button" className="mt-4 btn btn-happening shadow-lg">What's happening?</NavLink>
                 </div>
-                <div className="col-md-5 image">
+                <div className="col-12 col-md-12 col-xl-5 image">
                     <img src={image} alt="Leaf on home" className="image-leaf"/>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
-import { auth } from "../firebase";
+import { auth } from "../auth/firebase";
 import Loader from "react-loader-spinner";
 import useUpdateInfoDonate from "../hooks/useUpdateInfoDonate";
 import '../css/ModalDonate.css'

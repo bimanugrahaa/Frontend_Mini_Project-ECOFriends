@@ -1,8 +1,8 @@
 import { NavLink, useHistory } from "react-router-dom";
-import { auth } from "../firebase";
-import { signOutUser } from "../auth/authUser";
+import { auth } from "../auth/firebase";
 import { useState } from "react";
 import { Dropdown } from "react-bootstrap";
+import signOutUser from "../auth/authUser";
 import Logo from "./Logo";
 import '../css/Header.css'
 
